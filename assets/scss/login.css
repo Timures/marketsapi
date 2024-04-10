@@ -1,0 +1,86 @@
+@charset "UTF-8";
+.login {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+}
+.login .h1 {
+		margin-bottom: 16px;
+}
+.login .block {
+		padding: var(--padding-big);
+		border-radius: var(--radius);
+		background: var(--grey-bg7);
+}
+.login .block .btn-pink-black:before {
+		background-color: var(--grey-bg7);
+}
+.login .first-time {
+		background: var(--darkblue) url("../img/login-first-time.svg") no-repeat 100% 100%;
+		background-size: 156px auto;
+		padding-right: 185px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		min-height: 255px;
+}
+.login .first-time .btn {
+		margin-top: auto;
+		align-self: flex-start;
+}
+.login .first-time .text {
+		opacity: 0.65;
+}
+@media only screen and (max-width: 699px) {
+		.login .block {
+				padding-top: 20px;
+				padding-bottom: 20px;
+		}
+		.login .first-time {
+				padding-right: 144px;
+				background-position: calc(100% + 20px) 100%;
+		}
+}
+@media only screen and (min-width: 700px) {
+		.login:last-child {
+				margin-bottom: calc(10px - var(--vert-gap));
+		}
+		.login .h1 {
+				margin-bottom: 40px;
+				font-size: 64px;
+		}
+		.login .first-time {
+				font-size: 20px;
+		}
+		.login .first-time .h2 {
+				font-size: 32px;
+				line-height: 0.91;
+		}
+}
+@media only screen and (min-width: 1200px) {
+		.login {
+				padding-right: calc(100% - 613px);
+				--padding-big: 50px;
+		}
+		.login:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: calc(613px + var(--gap));
+				border-radius: var(--radius);
+				background-color: var(--white);
+				background-repeat: no-repeat;
+				background-size: cover;
+		}
+		.login.bg-login:after {
+				background-image: url("../img/login.webp");
+				background-position: 13% 50%;
+		}
+		.login.bg-reg:after {
+				background-image: url("../img/registration.webp");
+				background-position: 9% 50%;
+		}
+}

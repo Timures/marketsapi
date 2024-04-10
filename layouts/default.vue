@@ -1,0 +1,16 @@
+<script lang='ts' setup>
+console.log('loaded')
+</script>
+
+
+<template>
+    <div class="mainwrap">
+        <LayoutHeader />
+        <slot />
+        <LayoutFooter />
+    </div>
+</template>
+
+<style lang="scss">
+@import '@/assets/scss/style.scss';
+</style>

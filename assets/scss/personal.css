@@ -1,0 +1,496 @@
+@charset "UTF-8";
+.personal {
+		display: grid;
+		gap: var(--gap);
+		grid-template-columns: repeat(1, 1fr);
+		width: 100%;
+}
+.personal .block {
+		padding: 20px 16px;
+		border-radius: var(--radius);
+		background: var(--grey-bg7);
+}
+.personal .block .btn-pink-black:before {
+		background-color: var(--grey-bg7);
+}
+.personal .plan {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		font-weight: 300;
+}
+.personal .plan > * {
+		flex: 0 0 auto;
+		width: 100%;
+}
+.personal .plan .head {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		align-items: flex-start;
+		justify-content: center;
+		min-height: 96px;
+		padding-left: 111px;
+}
+.personal .plan img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 96px;
+		width: auto;
+		pointer-events: none;
+}
+.personal .plan .head .txt {
+		opacity: 0.65;
+}
+.personal .plan .h1 {
+		margin: 0 0 8px 0;
+}
+.personal .plan .detail {
+		position: relative;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 0.91;
+		border: 2px solid var(--white);
+		border-radius: 100px;
+		padding: 10px 50px 10px 14px;
+}
+.personal .plan .detail .pic-help {
+		position: absolute;
+		top: 50%;
+		width: 16px;
+		height: 16px;
+		right: 14px;
+		left: auto !important;
+		transform: translate3d(0, -50%, 0);
+}
+.personal .plan .btns {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--gap);
+}
+.personal .plan .btns .btn {
+		flex: 1 1 auto;
+		padding-left: 20px;
+		padding-right: 20px;
+}
+.personal .key {
+		background: var(--darkblue) url("../img/key-mobile.svg") no-repeat 100% 0;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		container-type: inline-size;
+		container-name: personal-key;
+}
+.personal .key .row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+}
+.personal .key .input {
+		padding-right: 0;
+		text-overflow: ellipsis;
+}
+.personal .info {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 24px;
+}
+.personal .info > * {
+		font: inherit;
+		margin: 0;
+}
+.personal .info .progress {
+		flex: 0 0 auto;
+		width: 100%;
+		margin-top: -12px;
+		height: 6px;
+		border-radius: 3px;
+		overflow: hidden;
+		backface-visibility: hidden;
+		background: rgba(255, 255, 255, 0.15);
+		position: relative;
+}
+.personal .info .progress > * {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		border-radius: inherit;
+}
+.personal .info .blue {
+		color: var(--blue);
+}
+.personal .info .progress .blue {
+		background: var(--blue);
+}
+.personal .info .red {
+		color: var(--red);
+}
+.personal .info .progress .red {
+		background: var(--red);
+}
+.personal .prolong {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+}
+.personal .prolong .row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+}
+.personal .prolong .wrap {
+		flex: 0 0 auto;
+		width: 100%;
+		position: relative;
+		height: 64px;
+}
+.personal .prolong .prolong-slider-minus, .personal .prolong .prolong-slider-plus {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+		padding: 0;
+		z-index: 5;
+}
+.personal .prolong .prolong-slider-minus svg, .personal .prolong .prolong-slider-plus svg {
+		width: 32px;
+		height: 32px;
+}
+.personal .prolong .prolong-slider-minus {
+		left: 0;
+}
+.personal .prolong .prolong-slider-plus {
+		right: 0;
+}
+.personal .prolong-slider {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		border-radius: 100px;
+		border: 2px solid rgba(255, 255, 255, 0.05);
+}
+.personal .prolong-slider, .personal .prolong-slider .swiper-wrapper, .personal .prolong-slider .swiper-slide {
+		height: 100% !important;
+}
+.personal .prolong-slider .swiper-slide {
+		width: 100%;
+		display: flex !important;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		height: auto !important;
+		padding: 0 68px;
+		font-weight: normal;
+		gap: 6px;
+}
+.personal .prolong-slider .blue {
+		color: var(--blue);
+}
+.personal .prolong-slider .small {
+		font-size: 0.625em;
+}
+.personal .help {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+}
+.personal .help .head {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+}
+.personal .help .head .text {
+		font-weight: 300;
+		opacity: 0.65;
+}
+.personal .help .wrap {
+		position: relative;
+		border: 2px solid var(--white);
+		border-radius: 100px;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 0.91;
+		padding: 12px 14px;
+}
+.personal .help .wrap .btn {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		padding: 0;
+		aspect-ratio: 1/1;
+		color: var(--pink);
+}
+@media (pointer:fine) {
+		.personal .help .wrap .btn:hover {
+				color: var(--white);
+		}
+}
+@media only screen and (min-width: 700px) {
+		.personal {
+				--padding-big: 50px;
+		}
+		.personal:last-child {
+				margin-bottom: calc(10px - var(--vert-gap));
+		}
+		.personal .block {
+				padding: var(--padding-big) var(--side-padding);
+		}
+		.personal .plan {
+				gap: 40px;
+		}
+		.personal .plan .head {
+				font-size: 20px;
+				padding-left: 128px;
+				min-height: 115px;
+		}
+		.personal .plan .head img {
+				height: 115px;
+		}
+		.personal .plan .detail {
+				font-size: 28px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				padding-left: 18px;
+		}
+		.personal .plan .detail .pic-help {
+				width: 20px;
+				height: 20px;
+				right: 20px;
+		}
+		.personal .plan .h1 {
+				font-size: 64px;
+		}
+		.personal .key {
+				background-image: url("../img/key-desktop.svg");
+				background-position: 100% 100%;
+				background-size: auto 190px;
+				gap: 20px;
+		}
+		.personal .key .btn {
+				align-self: flex-start;
+		}
+		@container personal-key (min-width: 500px) {
+				.personal .key .row {
+						padding-right: 240px;
+						flex-direction: row;
+						flex-wrap: wrap;
+						align-items: center;
+				}
+				.personal .key .btn {
+						align-self: center;
+				}
+				.personal .key .wrap-input {
+						flex: 1 1 auto;
+						min-width: 560px;
+				}
+		}
+		.personal .info .progress {
+				margin-top: 3px;
+		}
+		.personal .prolong {
+				flex-direction: row;
+				align-items: center;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				gap: 20px;
+		}
+		.personal .prolong .row {
+				flex-direction: row;
+				flex-wrap: wrap;
+		}
+		.personal .prolong .wrap {
+				width: auto;
+				flex: 1 1 auto;
+				min-width: 377px;
+				height: 68px;
+		}
+		.personal .prolong .row .btn {
+				flex: 1 1 auto;
+		}
+		.personal .help {
+				gap: 20px;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+		}
+		.personal .help .head {
+				font-size: 20px;
+		}
+		.personal .help .wrap {
+				flex: 1 0 auto;
+				max-width: 643px;
+				font-size: 32px;
+				padding: 10px 18px;
+		}
+}
+@media only screen and (min-width: 1000px) {
+		.personal .block {
+				padding: var(--padding-big);
+		}
+}
+@media only screen and (min-width: 900px) and (max-width: 1399px) {
+		.personal .plan {
+				display: grid;
+				grid-template-areas:
+						"head detail"
+						"head txt"
+						"btns txt";
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr auto auto;
+		}
+		.personal .plan .text {
+				order: 4;
+		}
+		.personal .plan .detail, .personal .plan .text {
+				max-width: 452px;
+				margin-left: auto;
+		}
+		.personal .plan .head {
+				margin-bottom: auto;
+				grid-area: head;
+		}
+		.personal .plan .detail {
+				margin-bottom: auto;
+				width: 100%;
+				grid-area: detail;
+		}
+		.personal .plan .text {
+				margin-top: auto;
+				grid-area: txt;
+		}
+		.personal .plan .btns {
+				margin-top: auto;
+				grid-area: btns;
+		}
+}
+@media only screen and (min-width: 1400px) {
+		.personal {
+				grid-template-columns: 638px 1fr;
+		}
+		.personal .plan {
+				grid-row: 1/4;
+		}
+		.personal .plan .btns {
+				margin-top: auto;
+		}
+		.personal .prolong {
+				order: 3;
+		}
+		.personal .help {
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: center;
+		}
+		.personal .help .head {
+				gap: 0;
+		}
+		.personal .help .head .h3 {
+				font: inherit;
+		}
+		.personal .help .head .text {
+				opacity: 1;
+		}
+		.personal .help .wrap {
+				flex: 0 0 auto;
+		}
+		.personal .prolong {
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+		}
+}
+.modal-buy-requests .modal-max {
+		max-width: 881px !important;
+}
+.buy-requests {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+}
+.buy-requests .checks {
+		flex: 1 1 auto;
+		display: flex;
+		padding: 5px;
+		border-radius: 100px;
+		border: 2px solid rgba(255, 255, 255, 0.05);
+		gap: 2px;
+}
+.buy-requests .checks > * {
+		flex: 1 1 auto;
+		position: relative;
+		border-radius: 100px;
+}
+.buy-requests .checks input {
+		position: absolute;
+		opacity: 0;
+}
+.buy-requests .checks .btn {
+		font-weight: normal;
+		font-size: 14px;
+		letter-spacing: normal;
+		text-transform: none;
+		padding: 12px 0;
+		border-width: 0;
+}
+.buy-requests .checks input:checked ~ .btn, .buy-requests .checks input:checked ~ .btn:before {
+		background-color: var(--pink);
+}
+.buy-requests .checks .btn:before {
+		background-color: rgba(255, 255, 255, 0.05);
+}
+.buy-requests .info {
+		flex: 0 0 auto;
+		width: 100%;
+		margin-top: calc(24px - var(--gap));
+		background: var(--black);
+		padding: 20px;
+		border-radius: 15px;
+}
+.buy-requests .info .h3 {
+		margin: 0 0 8px 0;
+}
+.buy-requests .info .text {
+		font-weight: 300;
+		font-size: 14px;
+		opacity: 0.65;
+}
+.buy-requests .info .text strong {
+		font-weight: bold;
+}
+@media only screen and (min-width: 700px) {
+		.buy-requests .checks > * {
+				flex: 1;
+		}
+		.buy-requests .checks .btn {
+				font-size: 18px;
+				padding: 18px 0;
+		}
+		.buy-requests .info {
+				padding: 30px;
+				margin-top: calc(30px - var(--gap));
+		}
+		.buy-requests .info .text {
+				font-size: 16px;
+		}
+		.buy-requests .info .h3 {
+				font-size: 28px;
+				margin-bottom: 12px;
+		}
+}
+@media only screen and (min-width: 800px) {
+		.buy-requests {
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+		}
+}

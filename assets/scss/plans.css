@@ -1,0 +1,300 @@
+@charset "UTF-8";
+.plans {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--gap);
+}
+.plans > * {
+		flex: 0 0 auto;
+		width: 100%;
+}
+.plans .head {
+		color: var(--black);
+		display: flex;
+		flex-direction: column;
+		gap: var(--padding-big);
+}
+.plans .trigger {
+		flex: 0 0 auto;
+		border: 2px solid var(--black);
+		border-radius: 100px;
+		padding: 5px;
+		display: flex;
+		align-items: center;
+		position: relative;
+}
+.plans .trigger:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		margin: 5px;
+		width: calc((100% - 10px) / 2);
+		border-radius: 100px;
+		background: var(--black);
+		transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+		transform: translate3d(0, 0, 0);
+}
+.plans .trigger > * {
+		flex: 1;
+		cursor: pointer;
+		user-select: none;
+		position: relative;
+		font-weight: normal;
+		font-size: 16px;
+		height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+@media only screen and (min-width: 700px) {
+		.plans .trigger > * {
+				font-size: 18px;
+				height: 54px;
+		}
+}
+.plans:not(.yearly) .trigger > *:nth-child(1), .plans.yearly .trigger > *:nth-child(2) {
+		color: var(--white);
+}
+.plans.yearly .trigger:before {
+		transform: translate3d(100%, 0, 0);
+}
+.plans .list .swiper {
+		width: auto !important;
+		overflow: visible !important;
+		margin: 0 calc(var(--gap) / -2) !important;
+}
+.plans .list .swiper-slide {
+		width: 20%;
+		padding: 0 calc(var(--gap) / 2);
+		min-width: calc(270px + var(--gap));
+		height: auto !important;
+		display: flex !important;
+		flex-direction: column;
+		gap: var(--gap);
+		container-type: inline-size;
+		container-name: plans-el;
+}
+.plans .list .bg {
+		flex: 1 0 auto;
+		width: 100%;
+		background: var(--black);
+		border-radius: 15px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		font-size: 16px;
+		color: var(--white);
+		gap: 40px;
+		padding: 30px 10px;
+}
+.plans .list .bg > * {
+		flex: 0 0 auto;
+		max-width: 100%;
+}
+.plans .list .pic {
+		height: 115px;
+		width: 100%;
+}
+.plans .list .pic img {
+		height: 100%;
+		width: auto;
+}
+.plans .list .h3 {
+		font-size: 32px;
+		margin-bottom: -28px;
+}
+.plans .list .price {
+		color: rgba(255, 255, 255, 0.5);
+		font-weight: bold;
+		font-size: 15px;
+		line-height: 1.5;
+		align-self: center;
+		padding: 2px 18px 0 18px;
+		height: 53px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		border: 2px solid var(--white);
+		border-radius: 100px;
+		max-width: none;
+		flex: 0 0 auto;
+		white-space: nowrap;
+		gap: 8px;
+}
+.plans .list .price.beta {
+		height: auto;
+		border-radius: 15px;
+		width: 100%;
+		padding: 10px 18px;
+}
+.plans .list .price strong {
+		color: var(--white);
+		font-size: 32px;
+		line-height: 1;
+		font-weight: bold;
+}
+.plans .list .price .small {
+		font-weight: normal;
+		font-size: 13px;
+		line-height: 1;
+}
+.plans .list .price .big {
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 0.91;
+		position: relative;
+		text-decoration: none;
+}
+.plans .list .price del.big:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		height: 3px;
+		transform: translate3d(0, -50%, 0);
+		background: var(--red);
+}
+.plans .list .price > *:not(.big):not(.small) {
+		display: flex;
+		align-items: flex-end;
+}
+.plans:not(.yearly) .list .price .per-year, .plans.yearly .list .price .per-month {
+		display: none;
+}
+.plans .list .text {
+		margin: auto 0;
+		font-size: 16px;
+}
+.plans .list .info {
+		font-weight: 300;
+		font-size: 14px;
+		line-height: 1.3;
+		margin: auto 0;
+		min-height: 3.9em;
+}
+.plans .list .info strong {
+		font-weight: bold;
+}
+@media only screen and (max-width: 699px) {
+		.plans {
+				overflow: hidden;
+				padding: var(--padding-big);
+				gap: var(--side-padding);
+				border-radius: var(--radius);
+				background: var(--white);
+		}
+		.plans .head .h2 {
+				margin-top: 4px;
+		}
+		.plans .trigger {
+				order: 2;
+				width: 100%;
+		}
+}
+@media only screen and (min-width: 700px) {
+		.plans .head {
+				background: var(--white);
+				border-radius: var(--radius);
+				padding: var(--padding-big);
+		}
+		.plans .list .swiper-slide {
+				min-width: calc(230px + var(--gap));
+		}
+		.plans .list .bg {
+				background: var(--grey-bg7);
+		}
+		@container plans-el (max-width: 245px) {
+				.plans .list .bg {
+						gap: 30px;
+				}
+				.plans .list .h3 {
+						margin-bottom: -18px;
+				}
+				.plans .list .price {
+						height: 45px;
+				}
+				.plans .list .price strong {
+						font-size: 28px;
+				}
+				.plans .list .text {
+						font-size: 14px;
+				}
+		}
+}
+@media only screen and (min-width: 700px) and (max-width: 1199px) {
+		.plans .head {
+				display: grid;
+				align-items: flex-start;
+				grid-template-columns: 1fr 360px;
+				padding-top: 32px;
+				padding-bottom: 32px;
+		}
+		.plans .trigger {
+				grid-area: 1/2/3/3;
+		}
+		.plans .head .text {
+				max-width: 21.666666em;
+		}
+}
+@media only screen and (min-width: 1200px) and (max-width: 1699px) {
+		.plans .head {
+				padding-top: 32px;
+				padding-bottom: 32px;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+		}
+		.plans .trigger {
+				width: 360px;
+		}
+		.plans .head .text {
+				text-align: right;
+				max-width: 21.666666em;
+		}
+}
+@media only screen and (min-width: 1700px) {
+		.plans .head {
+				width: calc((100% - var(--gap) * 2) / 4);
+				gap: 24px;
+				margin-bottom: calc(56px + var(--gap));
+		}
+		.plans .head .text {
+				margin-top: auto;
+		}
+		.plans .list {
+				width: calc((100% - var(--gap) * 2) / 4 * 3 + var(--gap));
+		}
+		.plans .list:only-child {
+				width: 100%;
+		}
+}
+.modal-plan .modal-max {
+		max-width: 932px !important;
+}
+.modal-plan .modal-content {
+		overflow: hidden;
+		backface-visibility: hidden;
+}
+.modal-plan .plans {
+		margin: 0;
+		padding: 0;
+		background: none;
+		border-radius: 0;
+		overflow: visible !important;
+}
+.modal-plan .plans .list .swiper-slide {
+		width: 33.333333%;
+}
+.modal-plan .plans .list .bg {
+		background: var(--black);
+		gap: 24px;
+}
+.modal-plan .plans .list .h3 {
+		margin-bottom: -12px;
+}
