@@ -17,7 +17,7 @@
 		background-color: var(--grey-bg7);
 }
 .login .first-time {
-		background: var(--darkblue) url("../img/login-first-time.svg") no-repeat 100% 100%;
+		background: var(--darkblue) url("/img/login-first-time.svg") no-repeat 100% 100%;
 		background-size: 156px auto;
 		padding-right: 185px;
 		display: flex;
@@ -76,11 +76,11 @@
 				background-size: cover;
 		}
 		.login.bg-login:after {
-				background-image: url("../img/login.webp");
+				background-image: url("/img/login.webp");
 				background-position: 13% 50%;
 		}
 		.login.bg-reg:after {
-				background-image: url("../img/registration.webp");
+				background-image: url("/img/registration.webp");
 				background-position: 9% 50%;
 		}
 }

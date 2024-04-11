@@ -76,7 +76,7 @@
 		padding-right: 20px;
 }
 .personal .key {
-		background: var(--darkblue) url("../img/key-mobile.svg") no-repeat 100% 0;
+		background: var(--darkblue) url("/img/key-mobile.svg") no-repeat 100% 0;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
@@ -271,7 +271,7 @@
 				font-size: 64px;
 		}
 		.personal .key {
-				background-image: url("../img/key-desktop.svg");
+				background-image: url("/img/key-desktop.svg");
 				background-position: 100% 100%;
 				background-size: auto 190px;
 				gap: 20px;

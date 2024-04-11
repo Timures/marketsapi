@@ -1,0 +1,5 @@
+export const APP_WRITE_ID = '661697d6d32f7dfede71'
+export const DB_ID = 'markets-base'
+export const COLLECTION_TARIFFS = 'tariffs'
+export const COLLECTION_USERS = 'users'
+export const STORAGE_ID = 'storage'

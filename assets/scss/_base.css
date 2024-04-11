@@ -502,7 +502,7 @@ a {
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background: url("../img/information-button.svg") no-repeat 50% 50%;
+		background: url("/img/information-button.svg") no-repeat 50% 50%;
 		background-size: contain;
 		left: 0.3em;
 }
@@ -654,7 +654,7 @@ li:last-child .jcf-option {
 		height: 20px;
 		display: block;
 		border-radius: 4px;
-		background: var(--white) url("../img/checkbox.svg") no-repeat 50% 50%;
+		background: var(--white) url("/img/checkbox.svg") no-repeat 50% 50%;
 		background-size: 12px auto;
 		transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
