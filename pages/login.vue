@@ -72,7 +72,7 @@ const login = async () => {
         <div class="block first-time">
           <h2 class="h2">Впервые на сайте?</h2>
           <div class="text">Выберите тариф и зарегистрируйтесь</div>
-          <a class="btn btn-grey" href="#"><span>Выбрать тариф</span></a>
+          <a class="btn btn-grey" href="/"><span>Выбрать тариф</span></a>
         </div>
         <!-- end .first-time-->
       </div>

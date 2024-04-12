@@ -1,4 +1,5 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
   <div class="hero">
@@ -14,7 +15,7 @@
           Неофициальный API интерфейс с актуальными, а так же историческими
           данными для ваших систем аналитики, телеграм ботов и других целей
         </div>
-        <a class="btn btn-pink-white link-choose" href="#">Выбрать тариф</a>
+        <a class="btn btn-pink-white link-choose" href="#mainPlans">Выбрать тариф</a>
       </div>
     </div>
     <!-- end .main-->

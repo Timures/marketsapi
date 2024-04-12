@@ -201,7 +201,7 @@
 		padding-right: 33px;
 }
 .table-select.dark .arrow {
-		background-image: url("../img/chevron-white.svg");
+		background-image: url("/img/chevron-white.svg");
 }
 .table-select.dark select, .table-select.dark .jcf-select-text {
 		color: var(--white);
@@ -209,7 +209,7 @@
 		border-color: rgba(255, 255, 255, 0.15);
 }
 .table-select.white .arrow {
-		background-image: url("../img/chevron-black.svg");
+		background-image: url("/img/chevron-black.svg");
 }
 .table-select.white select, .table-select.white .jcf-select-text {
 		color: var(--black);
@@ -410,7 +410,7 @@
 		width: 16px;
 		height: 16px;
 		margin: -8px 0;
-		background: url("../img/chevron-white.svg") no-repeat 50% 50%;
+		background: url("/img/chevron-white.svg") no-repeat 50% 50%;
 		background-size: contain;
 		transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 		transform: rotate(0deg);

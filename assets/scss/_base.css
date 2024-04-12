@@ -45,6 +45,9 @@
 				--font-size: 20px;
 		}
 }
+html {
+	scroll-behavior:smooth;
+  }
 html, body {
 		height: 100%;
 		box-sizing: border-box;
