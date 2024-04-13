@@ -3,14 +3,14 @@ import { ref } from 'vue'
 import { usePlansStore } from '~/store/plans.store'
 // import { Plan } from '@/types/plan'
 
-interface Plan {
-    $id: string
-    name: string
-    desc: string
-    price: number
-    price_year: number
-    icon: string
-  }
+// interface Plan {
+//     $id: string
+//     name: string
+//     desc: string
+//     price: number
+//     price_year: number
+//     icon: string
+//   }
 
 // Реактивная переменная для хранения данных планов
 const plansStore = usePlansStore()

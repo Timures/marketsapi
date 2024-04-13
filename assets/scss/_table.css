@@ -333,6 +333,9 @@
 		transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 		background: var(--bg-inner);
 		position: relative;
+		box-shadow: none;
+		width: 100%;
+		border: none;
 }
 .table-main-links .link:after {
 		content: '';

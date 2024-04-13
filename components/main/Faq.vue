@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+
 import { Collapse } from 'vue-collapsed'
-import { ref } from 'vue'
 import { useFaqStore } from '@/store/faq.store.ts'
 
 interface Faq {
