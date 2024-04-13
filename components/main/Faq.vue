@@ -1,32 +1,34 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
+import { Collapse } from 'vue-collapsed'
 import { ref } from 'vue'
 import { useFaqStore } from '@/store/faq.store.ts'
 
 interface Faq {
     $id: string
-    name: string
+    title: string
     text: string
     isOpen: boolean
   }
 
   const faqStore = useFaqStore()
 
-  const toggleFaq = (item: Faq) => {
-    item.isOpen = !item.isOpen
-  }
 
-  const setMaxHeight = (el:any) => {
-      el.style.setProperty(
-        '--max-height',
-        el.scrollHeight + 'px'
-      );
-    }
+const handleAccordion = (item: Faq) => {
+  item.isOpen = !item.isOpen
+}
 
+/**
+ * For individual control you might use:
+ *
+ * function handleMultiple(index) {
+ *   questions[index].isExpanded = !questions[index].isExpanded
+ * }
+ */
 </script>
 
 <template>
   <div class="faq">
-    <CommonAccordion />
     <div class="head">
       <h2 class="h2">
         Частые<br />
@@ -43,12 +45,13 @@ interface Faq {
       </div>
     </div>
     <!-- end .head-->
-    <div class="list">
-      <div class="el" v-for="item in faqStore.getFaq" :key="item.$id" :class="{open: item.isOpen}">
-        <h3 class="h3">
+    <div class="list" v-if="faqStore.getFaq.length > 0">
+
+  <div class="el" v-for="(item, index) in faqStore.getFaq" :key="item.$id">
+    <h3 class="h3"  @click="handleAccordion(item)">
          {{ item.title }}<span
             class="btn btn-pink-black"
-            @click="toggleFaq(item)"
+           
           >
             <svg width="24" height="24">
               <use xlink:href="/img/sprite.svg#info"></use>
@@ -58,28 +61,23 @@ interface Faq {
             </svg>
           </span>
         </h3>
-        <transition name="slide" @enter="setMaxHeight">
-          <div class="inner" >
-          
-            <div class="text" v-if="item.isOpen" v-html="item.text"></div>
   
-         
-        </div>
-      </transition>
-        <!-- end .inner-->
+    
+    <Collapse :when="item.isOpen" class="v-collapse">
+      <div class="inner">
+          <div class="text" v-html="item.text"></div>
       </div>
-      <!-- end .el-->
-    </div>
-    <!-- end .list-->
+       <!-- end .inner-->
+    </Collapse>
   </div>
+  <!-- end .el-->
+</div>
+    <!-- end .list-->
+    </div>
 </template>
 
-<style lang="scss">
-.slide-enter-active, .slide-leave-active {
-  transition: max-height 0.3s cubic-bezier(0, 1, 0.5, 1); /* настройте длительность и эффект анимации */
+<style>
+.v-collapse {
+  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
-.slide-enter, .slide-leave-to {
-   max-height: var(--max-height, 1000px); /* начальное состояние скрытия элемента */
-  overflow: hidden; /* скрываем содержимое, которое выходит за пределы высоты */
-}
-  </style>
+</style>

@@ -18,14 +18,13 @@ onMounted(() => {
 <template>
     <div class="content">
 				<div class="container">
-						<!-- <MainHero /> -->
+						<MainHero />
 						<!-- end .hero-->
 						<!-- <MainTable /> -->
 						<!-- end .table-->
-						<!-- <MainPlans /> -->
-						<CommonAccordion />
+						<MainPlans />
 						<!-- end .plans-->
-						<!-- <MainFaq /> -->
+						<MainFaq />
 						<!-- end .faq--> 
 				</div>
 				<!-- end .container--> 

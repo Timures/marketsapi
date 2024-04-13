@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 </script>
 
 <template>
@@ -15,7 +15,7 @@
           Неофициальный API интерфейс с актуальными, а так же историческими
           данными для ваших систем аналитики, телеграм ботов и других целей
         </div>
-        <a class="btn btn-pink-white link-choose" href="#mainPlans">Выбрать тариф</a>
+        <a class="btn btn-pink-white link-choose ready" href="#"><div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div><div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div></a>
       </div>
     </div>
     <!-- end .main-->
