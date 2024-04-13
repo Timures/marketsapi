@@ -98,11 +98,12 @@
 		opacity: 0;
 }
 .faq .el:not(.open) .inner {
-		display: none;
+		/* display: none; */
 }
 .faq .el .text {
 		padding: 0 var(--padding-small) var(--padding-small) var(--padding-small);
 		line-height: 1.4;
+		transition: 0.3s all ease-in;
 }
 .faq .el p {
 		padding: 0;

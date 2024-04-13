@@ -16,7 +16,7 @@ interface Plan {
 const plansStore = usePlansStore()
 
 // Геттер для получения данных о планах
-const plans = ref<Plan[]>(plansStore.getPlans)
+// const plans = ref<Plan[]>(plansStore.getPlans)
 
 // Реактивная переменная для отображения цен по годам
 const pricesByYear = ref(false)
