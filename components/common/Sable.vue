@@ -22,18 +22,21 @@ const openAdditionalParams = () => {
     additionalParamsStatus.value == false ? additionalParamsStatus.value = true : additionalParamsStatus.value = false
 }
 
+
+const apiSelectedOption = ref(null)
+const items = ref([
+  { name: 'Option 1', value: '1' },
+  { name: 'Option 2', value: '2' },
+  { name: 'Option 3', value: '3' },
+])
+
+
 </script>
 
 <template>
 <div class="table desktop">
     <div class="table-version">
-      <div class="table-select dark">
-        <select>
-          <option>WB - v1 (актуальная)</option>
-        </select>
-        <div class="arrow"></div>
-      </div>
-      <!-- end .table-select-->
+      <CommonDropDown :items="items" v-model="apiSelectedOption" />
     </div>
 
     <div class="slider-table">
@@ -263,8 +266,8 @@ const openAdditionalParams = () => {
             <!-- end .table-head-->
             <div class="table-tab-content" :class="{visible: selectedAnswerTab === 'code'}" data-id="#table-code-example">
               <div class="table-inner-head">
-                <div class="table-select dark">
-                  <select>
+                <div class="table-select dark custom-select">
+                  <select class="original-select">
                     <option>(Node.js) Axios</option>
                     <option>C</option>
                     <option>C#</option>
@@ -693,5 +696,47 @@ try {
 .slider-table {
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
+}
+
+.custom-select {
+  position: relative;
+  width: 200px; /* Настройте ширину по своему усмотрению */
+}
+
+
+.original-select {
+  appearance: none; /* Убирает стандартный стиль селекта */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #fff;
+  cursor: pointer;
+
+  
+}
+
+.original-select:focus {
+  outline: none;
+  /* border-color: blue; Пример: изменение цвета при фокусе */
+}
+
+/* Стилизация опций */
+.original-select option {
+  padding: 8px;
+  display: block;
+    font: normal 15px / 1.3 var(--font);
+    color: var(--black);
+    padding: 4px 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3 ease color;
+}
+.original-select option:checked {
+    color: var(--pink);
+}
+.original-select option:hover  {
+    color: var(--pink);
+    background-color: #fff;
 }
 </style>

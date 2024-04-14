@@ -1,7 +1,13 @@
-.slide-fade-enter-active, .slide-fade-leave-active {
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .slide-fade-enter, .slide-fade-leave-to /* .slide-fade-leave-active in <2.1.8 */ {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-4px);
+  opacity: 0;
+}
