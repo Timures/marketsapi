@@ -4,6 +4,7 @@ import type {
   NameValuePair,
   Method,
   serverData,
+  Params
 } from "@/types/servers";
 
 export const useServersStore = defineStore("servers", {
@@ -12,6 +13,10 @@ export const useServersStore = defineStore("servers", {
     loading: false,
     error: null as string | null,
     selectedServer: null as serverData | null, // Use serverData interface for selectedServer
+    selectedParam: {
+      main: null,
+      additional: ''
+    }
   }),
   actions: {
     async fetchServers() {
@@ -26,6 +31,7 @@ export const useServersStore = defineStore("servers", {
         const jsonData = await response.json();
         this.data = jsonData;
         this.selectDefaultServer("wb");
+        this.selectDefaultMainParam('hoswbhistory.s2.marketsapi.ru')
       } catch (error) {
         error || "Failed to fetch data";
       } finally {
@@ -46,8 +52,19 @@ export const useServersStore = defineStore("servers", {
       // Assuming the default server value is 'defaultServerValue'
       this.selectServerByValue(serverValue);
     },
+
+    /** PARAMS */
+    selectParamsByValue(paramsValue: string){
+      const selected_main_param = this.selectedServer.params.main.find((el) => el.value === paramsValue)
+      if (selected_main_param){
+        this.selectedParam.main = selected_main_param
+         } else {
+          throw new Error("Param not found");
+         }
+    },
   },
   getters: {
+    /** SERVERS */
     // Геттер для вывода только name из JSON
     getNameData(): NameValuePair[] {
       return this.data.map((item) => ({
@@ -70,6 +87,13 @@ export const useServersStore = defineStore("servers", {
     // Getter to extract "methods" from JSON
     getMethods(): Method[] {
       return this.selectedServer ? this.selectedServer.methods : [];
+    },
+    /** PARAMS */
+    getParamsData(): Params {
+      return this.selectedServer ? this.selectedServer.params : []
+    },
+    getParamsMainData(): Params[] {
+      return this.selectedServer ? this.selectedServer.params.main : []
     },
   }
 });

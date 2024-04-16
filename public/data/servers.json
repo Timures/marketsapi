@@ -16,8 +16,8 @@
 			},
 			{
 			  "type": "post",
-			  "name": "post WB",
-			  "desc": "v1 - get item from url",
+			  "name": "post",
+			  "desc": "v1 - get item from url WB",
 			  "lang": [
 				{
 				  "name": "C",
