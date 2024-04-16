@@ -9,7 +9,14 @@ interface ServerOption {
   name: string;
   value: string;
 }
+/** Выбор GET / POST */
+const selectedTab = ref('get')
+const changeSelectedTab = (tab: string) => {
+  selectedTab.value = tab
+};
 
+
+/** Выбор сервера */
 // Создайте ссылку для хранения выбранного сервера
 const serverSelectedOption = ref<ServerOption | null>(serversStore.getNameValueData);
 
@@ -37,6 +44,30 @@ onMounted(async () => {
       @update:modelValue="handleChangeSelectServer"
       />
     </div>
+
+    <div class="slider-table">
+      <div class="table-resizeable-left">
+        <div class="table-content">
+          <div class="table-head empty"></div>
+          <div class="table-scroll-wrap">
+            <div class="table-scroll">
+              <ul class="table-main-links js_tabs">
+                <li v-for="(method, index_method) in serversStore.getMethods" :key="index_method">
+                  <button class="link" :class="{ active: selectedTab === method.type }"
+                    @click="changeSelectedTab(method.type)"><span class="table-method"
+                      :class="method.type === 'get' ? 'green' : 'blue'">{{ method.name }}</span>
+                    <span class="text">{{ method.desc }}</span>
+                  </button>
+                </li>
+              </ul>
+              <!-- end .table-main-links-->
+            </div>
+          </div>
+          <!-- end .table-scroll-wrap-->
+        </div>
+        <!-- end .table-content-->
+      </div>
+      </div>
     </div>
 </template>
 

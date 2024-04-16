@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { reactive } from "vue";
 import type {
   NameValuePair,
+  Method,
   serverData,
 } from "@/types/servers";
 
@@ -64,6 +65,11 @@ export const useServersStore = defineStore("servers", {
       } else {
         return null;
       }
+    },
+    /** METHODS */
+    // Getter to extract "methods" from JSON
+    getMethods(): Method[] {
+      return this.selectedServer ? this.selectedServer.methods : [];
     },
   }
 });
