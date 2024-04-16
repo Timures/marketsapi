@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { usePlansStore } from '@/store/plans.store.ts'
-import { useFaqStore } from '@/store/faq.store.ts'
-import { useResponseStore } from '@/store/response.store'
-import { useMainApiStore } from '@/store/api.store'
+import { onBeforeMount } from 'vue'
+// import { usePlansStore } from '@/store/plans.store.ts'
+// import { useFaqStore } from '@/store/faq.store.ts'
+import { useServersStore } from '@/store/servers.store'
 
-onMounted(() => {
-  const plansStore = usePlansStore()
-  plansStore.fetchPlans()
+onBeforeMount(async () => {
+	const serversStore = useServersStore();
+  await serversStore.fetchServers(); // Загрузка серверов и установка по умолчанию
 
-  const faqStore = useFaqStore()
-  faqStore.fetchFaq()
-
-  const mainApiStore = useMainApiStore()
-  mainApiStore.fetchMainApi()
-
-//   const responseStore = useResponseStore()
-//   responseStore.fetchResponses()
-})
+});
 
 </script>
 
 <template>
     <div class="content">
 				<div class="container">
-					<CommonSable />
+					<CommonDable />
 						<!-- <MainHero /> -->
 						<!-- end .hero-->
 						<!-- <MainTable /> -->
@@ -38,3 +29,4 @@ onMounted(() => {
 		</div>
 		<!-- end .content-->
 </template>
+~/store/servers.store

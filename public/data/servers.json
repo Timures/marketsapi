@@ -1,0 +1,84 @@
+[
+	{
+		"name": "WB - v1 (актуальная)",
+		"value": "wb",
+		"methods": [
+			{
+			  "type": "get",
+			  "name": "get",
+			  "desc": "v1 - item details",
+			  "lang": [
+				{
+				  "name": "C",
+				  "code": "string get"
+				}
+			  ]
+			},
+			{
+			  "type": "post",
+			  "name": "post WB",
+			  "desc": "v1 - get item from url",
+			  "lang": [
+				{
+				  "name": "C",
+				  "code": "string post"
+				}
+			  ]
+			}
+		  ],
+		"params": {
+			"main": [
+				{ "id": 1, "name": "Автоматический подключен тестовый", "value": "hoswbhistory.s2.marketsapi.ru"},
+				{ "id": 2, "name": "подключен тестовый 2", "value": "hoswbhistory.s3.marketsapi.ru"}
+			],
+			"additional": {
+				"param": "string"
+			}
+		},
+		"response": {
+			"status": 400,
+			"code": "string"
+		}
+	},
+	{
+		"name": "taobao",
+		"value": "taobao",
+		"methods": [
+			{
+			  "type": "get",
+			  "name": "get",
+			  "desc": "v1 - item details TaoBao",
+			  "lang": [
+				{
+				  "name": "C",
+				  "code": "string get"
+				}
+			  ]
+			},
+			{
+			  "type": "post",
+			  "name": "post",
+			  "desc": "v1 - get item from url TaoBao",
+			  "lang": [
+				{
+				  "name": "C",
+				  "code": "string post"
+				}
+			  ]
+			}
+		  ],
+		"params": {
+			"main": [
+				{ "id": 1, "name": "Автоматический подключен taobao", "value": "hoswbhistory.st2.taobao.ru"},
+				{ "id": 2, "name": "подключен тестовый T2", "value": "hoswbhistory.st3.taobao.ru"}
+			],
+			"additional": {
+				"param": "string"
+			}
+		},
+		"response": {
+			"status": 400,
+			"code": "string"
+		}
+	}
+]

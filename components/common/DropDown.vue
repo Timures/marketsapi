@@ -8,27 +8,20 @@
       <div class="options-wrapper" v-show="isDropDownVisible">
         <div
           class="option"
-          :class="{selected : item == selectedOption}"
+          :class="{ selected: item == selectedOption }"
           v-for="(item, index) in items"
           :key="index"
           @click="toggleOptionSelect(item)"
         >
-          {{ item.name || mappedSelectedOption }}
+          {{ item.name }}
         </div>
       </div>
     </transition>
   </div>
 </template>
 
-<script setup>
-import {
-  defineProps,
-  defineEmits,
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount,
-} from "vue";
+<script setup lang="ts">
+import { defineProps, defineEmits, ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   items: {
@@ -36,35 +29,43 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
+    type: Object as () => ServerOption | null,
     default: null,
   },
 });
 
+interface ServerOption {
+  name: string;
+  value: string;
+}
+
 const isDropDownVisible = ref(false);
-
 const emit = defineEmits(["update:modelValue"]);
-const selectedOption = ref(props.modelValue);
+const selectedOption = ref<ServerOption | null>(null);
 
+// Обновление selectedOption при изменении props.modelValue
+watchEffect(() => {
+  selectedOption.value = props.modelValue;
+});
 const mappedSelectedOption = computed(() => {
-  return selectedOption.value?.name || selectedOption.value || "Выберите АПИ";
+  return selectedOption.value?.name || "Выберите АПИ";
 });
 
-const toggleOptionSelect = (item) => {
-  if (selectedOption.value !== item) {
-    selectedOption.value = item;
-    emit("update:modelValue", item);
-  }
+const toggleOptionSelect = (item: ServerOption) => {
+  selectedOption.value = item;
+  emit("update:modelValue", item);
   isDropDownVisible.value = false;
-  
 };
-const dropDown = ref(null);
-const closeDropDown = (element) => {
-  if (!dropDown.value.contains(element.target)) {
+
+const dropDown = ref<HTMLDivElement | null>(null);
+
+const closeDropDown = (element: Event) => {
+  if (!dropDown.value || !dropDown.value.contains(element.target as Node)) {
     isDropDownVisible.value = false;
   }
 };
+
 onMounted(() => {
-    selectedOption.value = props.items[0]
   window.addEventListener("click", closeDropDown);
 });
 

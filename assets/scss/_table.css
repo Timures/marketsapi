@@ -363,6 +363,7 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		text-align: left;
 }
 .table-tab-content:not(.visible) {
 		display: none !important;
