@@ -14,6 +14,8 @@ interface ServerOption {
 const selectedTab = ref('get')
 const changeSelectedTab = (tab: string) => {
     selectedTab.value = tab
+    serversStore.selectMethodsByType(tab)
+    selectedLangOption.value = serversStore.getLangsData[0]
 };
 /** Выбор параметров */
 const mainParamsStatus = ref(true)
@@ -35,6 +37,21 @@ const handleParamsMainSelected = () => {
     // console.log('handleParamsMainSelected',paramsMainSelectedOption.value);
     
 }
+
+/** Выбор repsonse */
+const selectedResponseTab = ref('code')
+const changeResponseSelectedTab = (tab: string) => {
+    selectedResponseTab.value = tab
+};
+
+/** Выбор языка */
+const selectedLangOption = ref()
+
+const handleSelectLang = () => {
+    // console.log('handle select lang', selectedLangOption.value);
+    serversStore.selectMethodsByType(selectedLangOption.value?.type)
+}
+
 /** Выбор сервера */
 // Создайте ссылку для хранения выбранного сервера
 const serverSelectedOption = ref<ServerOption | null>(serversStore.getNameValueData);
@@ -50,6 +67,8 @@ onMounted(async () => {
     if (defaultServer !== null) {
         serverSelectedOption.value = defaultServer; // Установите начальное значение
         paramsMainSelectedOption.value = serversStore.getParamsMainData[0]
+        selectedTab.value = serversStore.getMethods[0].type
+        selectedLangOption.value = serversStore.getLangsData[0]
     } else {
         console.error('Ошибка при загрузке данных из сервера.');
     }
@@ -86,6 +105,7 @@ onMounted(async () => {
                 <!-- end .table-content-->
             </div>
             <!-- end table-resizeable-left -->
+
             <div class="table-content table-tab-content" v-for="(method, index_method) in serversStore.getMethods"
                 :key="index_method" :class="{ visible: selectedTab === method.type }" data-id="#table-tab1">
                 <div class="table-head">
@@ -170,6 +190,384 @@ onMounted(async () => {
                 <!-- end .table-scroll-wrap-->
             </div>
             <!-- end .table-content-->
+
+            <div class="table-resizeable-right">
+        <div class="table-content">
+          <ul class="table-head table-tabs js_tabs">
+            <li>
+              <button class="btn btn-small btn-grey" :class="{active : selectedResponseTab === 'code'}" @click="changeResponseSelectedTab('code')"><span>Примеры
+                  кода</span></button>
+            </li>
+            <li>
+              <button class="btn btn-small btn-grey" :class="{active : selectedResponseTab === 'response'}" @click="changeResponseSelectedTab('response')"><span>Примеры
+                  ответа</span></button>
+            </li>
+            <li>
+              <button class="btn btn-small btn-grey disabled" href="#"><span>Полученный результат</span></button>
+            </li>
+          </ul>
+          <!-- end .table-head-->
+          <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }"
+            data-id="#table-code-example">
+            <div class="table-inner-head">
+              <div class="table-select dark custom-select">
+                <CommonDropDown :items="serversStore.getLangsData" v-model="selectedLangOption" />
+                <div class="arrow"></div>
+              </div>
+              <!-- end .table-select-->
+              <div class="btn btn-pink-black js_copy-table-code" data-tippy-content="Код скопирован">
+                <span>Копировать код</span>
+              </div>
+            </div>
+            <!-- end .table-inner-head-->
+
+            <div class="table-tab-content" :class="{ visible: selectedTab === 'get' }" data-id="#table-tab1">
+              <div class="table-scroll-wrap with-bg">
+                <div class="table-scroll">
+                  <pre class="table-code" v-if="selectedLangOption">
+                    {{ selectedLangOption.value }}
+                  </pre>
+                  <!-- end .table-code-->
+                </div>
+              </div>
+              <!-- end .table-scroll-wrap-->
+            </div>
+            <!-- end .table-tab-content-->
+            <div class="table-tab-content" :class="{ visible: selectedTab === 'post' }" data-id="#table-tab2">
+              <div class="table-scroll-wrap with-bg">
+                <div class="table-scroll">
+                  <pre class="table-code" v-if="selectedLangOption"> {{ selectedLangOption.value }}</pre>
+                  <!-- end .table-code-->
+                </div>
+              </div>
+              <!-- end .table-scroll-wrap-->
+            </div>
+            <!-- end .table-tab-content-->
+          </div>
+          <!-- end .table-tab-content-->
+          <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }"
+            data-id="#table-response-example">
+            <div class="table-inner-head">
+              <div class="text">Статусы ответов</div>
+              <div class="table-select dark">
+                <select>
+                  <option>200</option>
+                  <option>400</option>
+                </select>
+                <div class="arrow"></div>
+              </div>
+            </div>
+            <!-- end .table-inner-head-->
+            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }" data-id="#table-tab1">
+              <div class="table-scroll-wrap with-bg">
+                <div class="table-scroll">
+                  <div class="table-code">
+                    <ul>
+                      <li class="open">
+                        <div>item {} 18 keys:</div>
+                        <ul>
+                          <li class="open">
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div>item {} 18 keys:</div>
+                        <ul>
+                          <li>
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- end .table-code-->
+                </div>
+              </div>
+              <!-- end .table-scroll-wrap-->
+            </div>
+            <!-- end .table-tab-content-->
+            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }" data-id="#table-tab2">
+              <div class="table-scroll-wrap with-bg">
+                <div class="table-scroll">
+                  <div class="table-code">
+                    <ul>
+                      <li class="open">
+                        <div>item {} 18 keys:</div>
+                        <ul>
+                          <li class="open">
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div>item {} 18 keys:</div>
+                        <ul>
+                          <li>
+                            <div>item {} 18 keys:</div>
+                            <ul>
+                              <li>
+                                <div>num_iid: "730337851259"</div>
+                              </li>
+                              <li>
+                                <div>
+                                  title:
+                                  <span class="green">"Резиновые сапоги белые для женщин"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>desc_short: ""</div>
+                              </li>
+                              <li>
+                                <div>
+                                  price: <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>total_price: 0</div>
+                              </li>
+                              <li>
+                                <div>suggestive_price: 0</div>
+                              </li>
+                              <li>
+                                <div>
+                                  orginal_price:
+                                  <span class="blue">"79.00"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>
+                                  nick:
+                                  <span class="green">"珂茹旗舰店"</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div>num: null</div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- end .table-code-->
+                </div>
+              </div>
+              <!-- end .table-scroll-wrap-->
+            </div>
+            <!-- end .table-tab-content-->
+          </div>
+          <!-- end .table-tab-content-->
+        </div>
+        <!-- end .table-content-->
+      </div>
+
         </div>
     </div>
 </template>
@@ -177,5 +575,9 @@ onMounted(async () => {
 <style>
 .table.desktop {
     min-height: 300px;
+}
+.slider-table {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
 }
 </style>

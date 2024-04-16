@@ -4,7 +4,8 @@ import type {
   NameValuePair,
   Method,
   serverData,
-  Params
+  Params,MainParams,
+  Lang
 } from "@/types/servers";
 
 export const useServersStore = defineStore("servers", {
@@ -13,10 +14,12 @@ export const useServersStore = defineStore("servers", {
     loading: false,
     error: null as string | null,
     selectedServer: null as serverData | null, // Use serverData interface for selectedServer
+    selectedMethod: null as Method | null,
     selectedParam: {
       main: null,
       additional: ''
-    }
+    },
+    selectedLang: null as Lang | null
   }),
   actions: {
     async fetchServers() {
@@ -31,7 +34,9 @@ export const useServersStore = defineStore("servers", {
         const jsonData = await response.json();
         this.data = jsonData;
         this.selectDefaultServer("wb");
-        this.selectDefaultMainParam('hoswbhistory.s2.marketsapi.ru')
+        // this.selectDefaultMainParam('hoswbhistory.s2.marketsapi.ru')
+        this.selectDefaultMethod(this.getMethods[0].type)
+        console.log('test ', this.selectedMethod)
       } catch (error) {
         error || "Failed to fetch data";
       } finally {
@@ -53,6 +58,20 @@ export const useServersStore = defineStore("servers", {
       this.selectServerByValue(serverValue);
     },
 
+    /** METHODS */
+    selectMethodsByType(methodType: string) {
+      console.log('selectMethodsByType methodType', methodType)
+      const selected_method = this.selectedServer?.methods.find((method) => method.type === methodType)
+      if(selected_method){
+        this.selectedMethod = selected_method
+      } else {
+        throw new Error("Method not found");
+      }
+    },
+    selectDefaultMethod(methodType: string) {
+      console.log('selectDefaultMethod methodType', methodType)
+      this.selectMethodsByType(methodType)
+    },
     /** PARAMS */
     selectParamsByValue(paramsValue: string){
       const selected_main_param = this.selectedServer.params.main.find((el) => el.value === paramsValue)
@@ -90,10 +109,27 @@ export const useServersStore = defineStore("servers", {
     },
     /** PARAMS */
     getParamsData(): Params {
-      return this.selectedServer ? this.selectedServer.params : []
+      if (this.selectedServer) {
+        return this.selectedServer.params;
+      } else {
+        // Возвращаем пустой объект Params или генерируем ошибку, в зависимости от логики вашего приложения
+        return { main: [], additional: { param: '' } }; // Пустой объект Params
+      }
     },
-    getParamsMainData(): Params[] {
-      return this.selectedServer ? this.selectedServer.params.main : []
+    getParamsMainData(): MainParams[] {
+      if (this.selectedServer && this.selectedServer.params) {
+        return this.selectedServer.params.main
+      } else {
+        // Возвращаем пустой объект Params или генерируем ошибку, в зависимости от логики вашего приложения
+        return  []; // Пустой объект Params
+      }
     },
+    /** RESPONSE */
+    getLangsData(): Lang[]{
+      return this.selectedMethod ? this.selectedMethod.lang : []
+    },
+    getSelectedLang(): Lang | null {
+      return this.selectedLang
+    }
   }
 });

@@ -9,22 +9,78 @@
 			  "desc": "v1 - item details",
 			  "lang": [
 				{
+				  "name": "(Node.js) Axios",
+				  "value": "const axios = require('axios');\nconst options = { method: 'GET',\nurl: 'https://taobao-tmall-16881.p.rapidapi.com/api/tkl/v2/item/detail',\nparams: { provider: 'taobao',\nid: '730337851259' },\nheaders: { 'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',\n'X-RapidAPI-Host': 'taobao-tmall-16881.p.rapidapi.com' }};\ntry {\nconst response = await axios.request(options);\nconsole.log(response.data);\n} catch (error) {\nconsole.error(error);\n}"
+				},
+				{
 				  "name": "C",
-				  "code": "string get"
+				  "value": "get string code"
+				},
+				{
+				  "name": "C#",
+				  "value": "string code"
+				},
+				{
+				  "name": "Go",
+				  "value": "string code"
+				},
+				{
+				  "name": "HTTP",
+				  "value": "string code"
+				},
+				{
+				  "name": "Java",
+				  "value": "string code"
+				},
+				{
+				  "name": "Javascript",
+				  "value": "string code"
+				},
+				{
+				  "name": "PHP",
+				  "value": "string code"
 				}
 			  ]
 			},
 			{
-			  "type": "post",
-			  "name": "post",
-			  "desc": "v1 - get item from url WB",
-			  "lang": [
-				{
-				  "name": "C",
-				  "code": "string post"
-				}
-			  ]
-			}
+				"type": "post",
+				"name": "post",
+				"desc": "v1 - get item from url WB",
+				"lang": [
+					{
+					  "name": "(Node.js) Axios",
+					  "value": "const axios = require('axios');\n\nconst encodedParams = new URLSearchParams();\nencodedParams.set('url', '【女童连衣裙夏2020夏纯棉绣花长袖长款连衣裙公主裙中小童连衣裙】复制￥fHK56aP20luan￥，打开【手机阿里】或【支付宝-点首页进行搜索】查看：https://qr.1688.com/share.html?secret=vOdX4Ah3');\n\nconst options = {\n  method: 'POST',\n  url: 'https://taobao-tmall-16881.p.rapidapi.com/api/tkl/item/url',\n  headers: {\n    'content-type': 'application/x-www-form-urlencoded',\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',\n    'X-RapidAPI-Host': 'taobao-tmall-16881.p.rapidapi.com'\n  },\n  data: encodedParams,\n};\n\ntry {\n  const response = await axios.request(options);\n  console.log(response.data);\n} catch (error) {\n  console.error(error);\n}"
+					},
+					{
+					  "name": "C",
+					  "value": "post string code"
+					},
+					{
+					  "name": "C#",
+					  "value": "string code"
+					},
+					{
+					  "name": "Go",
+					  "value": "string code"
+					},
+					{
+					  "name": "HTTP",
+					  "value": "string code"
+					},
+					{
+					  "name": "Java",
+					  "value": "string code"
+					},
+					{
+					  "name": "Javascript",
+					  "value": "string code"
+					},
+					{
+					  "name": "PHP",
+					  "value": "string code"
+					}
+				  ]
+			  }
 		  ],
 		"params": {
 			"main": [
@@ -35,10 +91,18 @@
 				"param": "string"
 			}
 		},
-		"response": {
-			"status": 400,
-			"code": "string"
-		}
+		"response": [
+			{
+				"status": 200,
+				"name": "200",
+				"value": "HTTP 200 OK success "
+			},
+			{
+				"status": 400,
+				"name": "400",
+				"value": "HTTP 400 Bad Request Error"
+			}
+		]
 	},
 	{
 		"name": "taobao",
@@ -50,8 +114,36 @@
 			  "desc": "v1 - item details TaoBao",
 			  "lang": [
 				{
+				  "name": "(Node.js) Axios",
+				  "value": "const axios = require('axios');\nconst options = { method: 'GET',\nurl: 'https://taobao-tmall-16881.p.rapidapi.com/api/tkl/v2/item/detail',\nparams: { provider: 'taobao',\nid: '730337851259' },\nheaders: { 'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',\n'X-RapidAPI-Host': 'taobao-tmall-16881.p.rapidapi.com' }};\ntry {\nconst response = await axios.request(options);\nconsole.log(response.data);\n} catch (error) {\nconsole.error(error);\n}"
+				},
+				{
 				  "name": "C",
-				  "code": "string get"
+				  "value": "string code"
+				},
+				{
+				  "name": "C#",
+				  "value": "string code"
+				},
+				{
+				  "name": "Go",
+				  "value": "string code"
+				},
+				{
+				  "name": "HTTP",
+				  "value": "string code"
+				},
+				{
+				  "name": "Java",
+				  "value": "string code"
+				},
+				{
+				  "name": "Javascript",
+				  "value": "string code"
+				},
+				{
+				  "name": "PHP",
+				  "value": "string code"
 				}
 			  ]
 			},
@@ -61,8 +153,36 @@
 			  "desc": "v1 - get item from url TaoBao",
 			  "lang": [
 				{
+				  "name": "(Node.js) Axios",
+				  "value": "const axios = require('axios');\nconst options = { method: 'GET',\nurl: 'https://taobao-tmall-16881.p.rapidapi.com/api/tkl/v2/item/detail',\nparams: { provider: 'taobao',\nid: '730337851259' },\nheaders: { 'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',\n'X-RapidAPI-Host': 'taobao-tmall-16881.p.rapidapi.com' }};\ntry {\nconst response = await axios.request(options);\nconsole.log(response.data);\n} catch (error) {\nconsole.error(error);\n}"
+				},
+				{
 				  "name": "C",
-				  "code": "string post"
+				  "value": "string code"
+				},
+				{
+				  "name": "C#",
+				  "value": "string code"
+				},
+				{
+				  "name": "Go",
+				  "value": "string code"
+				},
+				{
+				  "name": "HTTP",
+				  "value": "string code"
+				},
+				{
+				  "name": "Java",
+				  "value": "string code"
+				},
+				{
+				  "name": "Javascript",
+				  "value": "string code"
+				},
+				{
+				  "name": "PHP",
+				  "value": "string code"
 				}
 			  ]
 			}

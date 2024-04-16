@@ -2,7 +2,7 @@ export interface Method {
   type: string;
   name: string;
   desc: string;
-  lang: { name: string; code: string }[];
+  lang: { name: string; value: string }[];
 }
 
 export interface Params {
@@ -10,9 +10,17 @@ export interface Params {
   additional: { param: string };
 }
 
+export interface MainParams {
+  id: number; name: string; value: string;
+}
 export interface Response {
   status: number;
   code: string;
+}
+
+export interface Lang {
+  name: string;
+  value: string;
 }
 
 export interface serverData {
