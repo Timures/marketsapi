@@ -5,7 +5,7 @@ import type {
   Method,
   serverData,
   Params,MainParams,
-  Lang
+  Lang,Response
 } from "@/types/servers";
 
 export const useServersStore = defineStore("servers", {
@@ -16,10 +16,11 @@ export const useServersStore = defineStore("servers", {
     selectedServer: null as serverData | null, // Use serverData interface for selectedServer
     selectedMethod: null as Method | null,
     selectedParam: {
-      main: null,
+      main: null as MainParams | null,
       additional: ''
     },
-    selectedLang: null as Lang | null
+    selectedLang: null as Lang | null,
+    selectedResponse: null as Response | null
   }),
   actions: {
     async fetchServers() {
@@ -36,7 +37,6 @@ export const useServersStore = defineStore("servers", {
         this.selectDefaultServer("wb");
         // this.selectDefaultMainParam('hoswbhistory.s2.marketsapi.ru')
         this.selectDefaultMethod(this.getMethods[0].type)
-        console.log('test ', this.selectedMethod)
       } catch (error) {
         error || "Failed to fetch data";
       } finally {
@@ -57,10 +57,9 @@ export const useServersStore = defineStore("servers", {
       // Assuming the default server value is 'defaultServerValue'
       this.selectServerByValue(serverValue);
     },
-
+   
     /** METHODS */
     selectMethodsByType(methodType: string) {
-      console.log('selectMethodsByType methodType', methodType)
       const selected_method = this.selectedServer?.methods.find((method) => method.type === methodType)
       if(selected_method){
         this.selectedMethod = selected_method
@@ -69,18 +68,25 @@ export const useServersStore = defineStore("servers", {
       }
     },
     selectDefaultMethod(methodType: string) {
-      console.log('selectDefaultMethod methodType', methodType)
       this.selectMethodsByType(methodType)
     },
     /** PARAMS */
     selectParamsByValue(paramsValue: string){
-      const selected_main_param = this.selectedServer.params.main.find((el) => el.value === paramsValue)
+      if(this.selectedServer) {
+        const selected_main_param = this.selectedServer.params.main.find((el) => el.value === paramsValue)
       if (selected_main_param){
         this.selectedParam.main = selected_main_param
          } else {
           throw new Error("Param not found");
          }
+      }
     },
+     /** RESPONSE */
+    selectResponse(response: Response) {
+      console.log('test select Resp', response);
+      
+      this.selectedResponse = response
+    }
   },
   getters: {
     /** SERVERS */
@@ -124,12 +130,20 @@ export const useServersStore = defineStore("servers", {
         return  []; // Пустой объект Params
       }
     },
-    /** RESPONSE */
+    /** Code Examples */
     getLangsData(): Lang[]{
       return this.selectedMethod ? this.selectedMethod.lang : []
     },
     getSelectedLang(): Lang | null {
       return this.selectedLang
+    },
+    /** Responses */
+    getSelectedResponses(): Response[] {
+      if (this.selectedServer && Array.isArray(this.selectedServer.response)) {
+        return this.selectedServer.response;
+      } else {
+        return []; // Возвращаем пустой массив, если selectedServer или его response не определены или не являются массивом
+      }    
     }
   }
 });

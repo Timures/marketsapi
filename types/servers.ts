@@ -13,9 +13,11 @@ export interface Params {
 export interface MainParams {
   id: number; name: string; value: string;
 }
+
 export interface Response {
   status: number;
-  code: string;
+  name: string;
+  value: string
 }
 
 export interface Lang {
