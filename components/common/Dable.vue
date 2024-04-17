@@ -2,6 +2,7 @@
 import { useServersStore } from '@/store/servers.store'
 import { ref, onMounted, watch } from 'vue';
 import { Collapse } from 'vue-collapsed'
+
 import type { MainParams } from '@/types/servers'
 // Получите доступ к хранилищу серверов
 const serversStore = useServersStore();
@@ -158,14 +159,14 @@ const copyToClipboard = (text: string) => {
 // test
 // const { swiper } = useSwiper();
 
-let swiperInstance = null;
+let swiperInstance: any | null = null;
 let currentSlideIndex = ref(0);
 
-const onSwiperInit = (swiper) => {
+const onSwiperInit = (swiper: any) => {
   swiperInstance = swiper;
 };
 
-const onSlideChange = (swiperInstance) => {
+const onSlideChange = (swiperInstance: any) => {
   console.log('Слайд изменился. Swiper:', swiperInstance);
   if (swiperInstance && swiperInstance.activeIndex !== undefined) {
     console.log('Индекс активного слайда:', swiperInstance.activeIndex);
