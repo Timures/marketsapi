@@ -102,6 +102,9 @@ onBeforeUnmount(() => {
     color: #000;
     z-index: 2;
     border-radius: 16px;
+    @media screen and (max-width: 999px) {
+      width: 100%;
+    }
 }
 
 .option:hover {
