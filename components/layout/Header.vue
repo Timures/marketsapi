@@ -25,7 +25,9 @@ const closeChangePassword = () => {
 <template>
   <header class="header">
     <div class="container">
-      <a class="logo" href="/"><img src="/img/logo.svg" alt="MarketsAPI" /></a>
+      <NuxtLink class="logo" href="/">
+        <img src="/img/logo.svg" alt="MarketsAPI" />
+      </NuxtLink>
       <div class="toggle-menu btn btn-grey" title="Меню">
         <svg width="24" height="24">
           <use xlink:href="/img/sprite.svg#menu"></use>

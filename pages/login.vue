@@ -17,12 +17,13 @@ const login = async () => {
 	
   await account.createEmailSession(emailRef.value, passwordRef.value);
   const response = await account.get();
-  
+  console.log('lgin ', response.$id)
   if (response) {
     authStore.set({
       email: response.email,
       name: response.name,
       status: response.status,
+      user_id: response.$id
     });
   }
 

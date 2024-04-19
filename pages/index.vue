@@ -46,4 +46,3 @@ onBeforeMount(async () => {
 	</div>
 	<!-- end .content-->
 </template>
-~/store/servers.store
