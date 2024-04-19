@@ -236,7 +236,9 @@ onMounted(async () => {
           translate: ['100%', 0, 0],
         },
       }" :breakpoints="{ 999: { slidesPerView: 1 }, 1000: { slidesPerView: 3 } }" @swiper="onSwiperInit"
-      @slideChange="onSlideChange" :navigatin.nextEl="'.swiper-button-next'" class="slider-table">
+      @slideChange="onSlideChange" :navigation="{
+                    nextEl: '.slider-table-next',
+                }" class="slider-table">
 
       <SwiperSlide class="table-resizeable-left">
         <div class="table-content">
