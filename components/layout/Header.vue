@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { account } from "@/utils/appwrite";
 import { useAuthStore } from "@/store/auth.store";
+import ChangePassword from '@/components/personal/ChangePassword.vue'
 const store = useAuthStore();
 const router = useRouter();
 
@@ -9,6 +10,16 @@ const logout = async () => {
   store.clear();
   await router.push("/login");
 };
+
+/** Change Password Modal */
+const modalChangePasswordStatus = ref<boolean>(false)
+const handleChangePassword = () => {
+  
+  modalChangePasswordStatus.value = true
+}
+const closeChangePassword = () => {
+  modalChangePasswordStatus.value = false
+}
 </script>
 
 <template>
@@ -37,7 +48,8 @@ const logout = async () => {
             >
           </li>
         </ul>
-        <ul v-show="!store.isAuth">
+
+        <ul v-if="!store.isAuth">
           <li>
             <a class="btn btn-grey btn-small" href="/login">
               <span>Войти в кабинет</span>
@@ -45,11 +57,11 @@ const logout = async () => {
           </li>
         </ul>
 
-        <ul v-show="store.isAuth">
+        <ul v-else="store.isAuth">
           <li>
-            <a class="btn btn-grey btn-small js_modal" href="#change-password">
+            <button class="btn btn-grey btn-small js_modal" @click="handleChangePassword">
               <span>Сменить пароль</span>
-            </a>
+            </button>
           </li>
           <li>
             <button class="btn btn-grey-red btn-small" @click="logout">
@@ -63,4 +75,7 @@ const logout = async () => {
     <!-- end .container-->
   </header>
   <!-- end .header-->
+  <CommonModal :is-open="modalChangePasswordStatus" @close="modalChangePasswordStatus = false">
+    <ChangePassword :on-close="closeChangePassword" />
+  </CommonModal>
 </template>

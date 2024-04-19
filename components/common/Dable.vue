@@ -167,9 +167,7 @@ const onSwiperInit = (swiper: any) => {
 };
 
 const onSlideChange = (swiperInstance: any) => {
-  console.log('Слайд изменился. Swiper:', swiperInstance);
   if (swiperInstance && swiperInstance.activeIndex !== undefined) {
-    console.log('Индекс активного слайда:', swiperInstance.activeIndex);
     currentSlideIndex.value = swiperInstance.activeIndex;
   } else {
     console.error('Ошибка: swiperInstance или его свойство activeIndex не определены.');
@@ -178,7 +176,7 @@ const onSlideChange = (swiperInstance: any) => {
 
 const nextSlide = () => {
   if (swiperInstance) {
-    console.log('value nextSlide swiperInstance', swiperInstance)
+    // console.log('value nextSlide swiperInstance', swiperInstance)
     swiperInstance.slideNext();
   }
 };
@@ -193,6 +191,7 @@ const testEndpointAndNext = () => {
   handleTestEndpoint()
   nextSlide()
 }
+
 // Загрузите данные и установите начальное значение после монтирования компонента
 onMounted(async () => {
   await serversStore.fetchServers(); // Загрузка данных из хранилища
@@ -203,6 +202,7 @@ onMounted(async () => {
     selectedTab.value = serversStore.getMethods[0].type
     selectedLangOption.value = serversStore.getLangsData[0]
     selectedResponseOption.value = serversStore.getSelectedResponses[0]
+
   } else {
     console.error('Ошибка при загрузке данных из сервера.');
   }
@@ -210,6 +210,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Transition name="fade">
   <div class="table">
     <div class="slider-table-progress">
       <div :class="{ active: currentSlideIndex === 0 }"></div>
@@ -500,6 +501,7 @@ onMounted(async () => {
     </div>
     <!-- end .table-nav-->
   </div>
+</Transition>
 </template>
 
 <style>
