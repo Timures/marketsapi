@@ -4,12 +4,15 @@ import { usePlansStore } from '~/store/plans.store'
 // Реактивная переменная для хранения данных планов
 const plansStore = usePlansStore()
 const authStore = useAuthStore()
+
+const props = defineProps<{ onClose?: () => void }>();
+
 const currentLevel = authStore.getCurrentTariffLevel
 /** Вывод тарифов выше уровня текущего */
 const plansToLevelUp = ref()
 /** Вывод конвертации дней */
 
-
+const newKeyExpired = ref(0)
 const convertPlanDays = (tariffLevel: number | undefined): number => {
     if (tariffLevel === undefined) {
         console.error('Уровень тарифа не определен');
@@ -42,8 +45,13 @@ const convertPlanDays = (tariffLevel: number | undefined): number => {
 };
 
 // Функция для изменения тарифа пользователя
-const changeTariff = () => {
-  console.log('change plan');
+const changeTariff = (tariffId: string, convertDays: number) => {
+    const changeData = {tariff:tariffId, key_days:convertDays}
+    authStore.patchUserPlan(changeData)
+   
+  console.log('change plan', tariffId);
+  // Emit close event to close the modal after successful password change
+props.onClose && props.onClose();
   
 };
 
@@ -54,11 +62,11 @@ const pricesByYear = ref(false)
 // Функция для изменения режима отображения цен
 const changePriceBy = () => {
     pricesByYear.value = !pricesByYear.value
+    
 }
 
-const props = defineProps<{ onClose?: () => void }>();
-// Emit close event to close the modal after successful password change
-// props.onClose && props.onClose();
+
+
 const formatDays = (days: number): string => {
   if (days === 1 || (days % 10 === 1 && days % 100 !== 11)) {
     return `${days} день`;
@@ -123,10 +131,10 @@ onBeforeMount(()=> {
                             <div class="per-year" v-show="pricesByYear"><strong>{{slide.price_year}} ₽</strong>/год</div>
                         </div>
                         <!-- end .price-->
-                        <div class="info d-inline">Оставшихся <strong>{{ formatDays(authStore.getKeyExpired) }}</strong> по тарифу Basic будут пересчитаны в <strong>{{ formatDays(convertPlanDays(slide.tariff_level)) }}</strong> по тарифу Pro.</div>
+                        <div class="info d-inline">Оставшихся <strong>{{ formatDays(authStore.getKeyExpired) }}</strong> по тарифу {{ authStore.getCurrentTariff.name }} будут пересчитаны в <strong>{{ formatDays(convertPlanDays(slide.tariff_level)) }}</strong> по тарифу {{ slide.name }}.</div>
                     </div>
                     <!-- end .bg-->
-                    <a class="btn btn-pink-black" href="#"><span>выбрать</span></a>
+                    <button class="btn btn-pink-black" @click="changeTariff(slide.$id, convertPlanDays(slide.tariff_level))"><span>выбрать</span></button>
                 </SwiperSlide>
             </Swiper>
 

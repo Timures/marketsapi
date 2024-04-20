@@ -15,8 +15,9 @@ onMounted(async () => {
 		// console.log('user is ', user);
 		store.fetchProfile()
 
-		const plansStore = usePlansStore()
-    await plansStore.fetchPlans();
+		const plansStore = usePlansStore()    	
+		await plansStore.fetchPlans();
+		
 		isLoaded.value = false
 	} catch (error) {
 		router.push('/login')

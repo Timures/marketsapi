@@ -12,14 +12,21 @@ const closeChangePlan = () => {
     modalChangePlanStatus.value = false
 }
 
+
+const currentTariff = computed(() => ({
+    name: authStore.getCurrentTariff.name,
+    updated: authStore.getCurrentTariffUpdated,
+    icon: authStore.getCurrentTariff.icon,
+}));
+
 </script>
 
 <template>
     <div class="block plan">
         <div class="head">
-            <img :src="authStore.getCurrentTariff.icon" alt="" />
-            <h3 class="h1">{{ authStore.getCurrentTariff.name }}</h3>
-            <div class="txt">Ваш тариф с {{  authStore.getCurrentTariffUpdated }}</div>
+            <img :src="currentTariff.icon" alt="" />
+            <h3 class="h1">{{ currentTariff.name }}</h3>
+            <div class="txt">Ваш тариф с {{  currentTariff.updated }}</div>
         </div>
         <!-- end .head-->
         <div class="detail">1000 запросов в сутки<span class="pic-help"
