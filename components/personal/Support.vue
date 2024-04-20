@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const supportEmail = ref('teh@marketsapi.ru')
-
+const copyText = 'Почта скопирована'
 // Create a ref to store the copy status message
 const copyStatus = ref<boolean | null>(null);
 // Function to copy text to clipboard
@@ -27,17 +27,17 @@ const copyToClipboard = (text: string) => {
             <div class="text">Напишите нам и мы поможем:</div>
         </div>
         <!-- end .head-->
-        <div class="wrap">
+        <div class="wrap support-copy">
 
             <div class="text" id="copy-email">{{ supportEmail }}</div>
-
-            <button class="btn btn-simple js_copy btn-tippy" @click="copyToClipboard(supportEmail)"
-                data-tippy-content="Почта скопирована" data-href="#copy-email">
+            <div class="tippy-wrap">
                 <transition name="fade">
                     <div class="tippy" v-show="copyStatus">
-                        <div class="bubble">{{ supportEmail }}</div>
+                        <div class="bubble">{{ copyText }}</div>
                     </div>
                 </transition>
+            <button class="btn btn-simple js_copy" @click="copyToClipboard(supportEmail)">
+                
                 <svg width="24" height="24">
                     <use xlink:href="/img/sprite.svg#copy"></use>
                 </svg>
@@ -45,6 +45,7 @@ const copyToClipboard = (text: string) => {
                     <use xlink:href="/img/sprite.svg#copy-active"></use>
                 </svg>
             </button>
+            </div>
 
         </div>
         <!-- end .wrap-->
@@ -53,19 +54,50 @@ const copyToClipboard = (text: string) => {
 </template>
 
 <style lang="scss" scoped>
-.btn-tippy {
+.support-copy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+@media only screen and (min-width: 700px){
+    .personal .help .wrap {
+    flex: 1 0 auto;
+    max-width: 643px;
+    font-size: 32px;
+    padding: 0 0 0 18px;
+}
+}
+
+
+.personal .help .wrap .btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    color: var(--pink);
+    /* width: 50px; */
+    height: 50px;
+}
+.tippy-wrap {
     position: relative;
+    width: 50px;
+    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
 }
 
 .tippy {
     position: absolute;
-    top: -55%;
+    top: -60%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: normal;
     color: #000;
-    min-width: 150px;
-    width: 100%;
+    min-width: 190px;
+    width: auto;
 }
 
 .bubble {
