@@ -80,7 +80,7 @@ const changePriceBy = () => {
           <!-- end .price-->
         </div>
         <!-- end .bg-->
-        <a class="btn btn-pink-black" href="/registration"><span>выбрать</span></a>
+        <NuxtLink class="btn btn-pink-black" to="/registration"><span>выбрать</span></NuxtLink>
       </SwiperSlide>
     </Swiper>
       <!-- end .plans-slider-->

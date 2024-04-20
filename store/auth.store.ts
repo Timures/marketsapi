@@ -14,12 +14,24 @@ interface IProfile {
     user_id: string,
     name: string,
     email: string,
-    tariff: object,
+    tariff: ITariff,
     requests: number,
     used_requests: number,
     type: string,
     key: string,
     key_days: number
+}
+
+interface ITariff {
+    $id: string,
+    $updatedAt: string, // "2024-04-20T09:07:13.254+00:00"
+    name: string,
+    desc: string,
+    enabled: boolean,
+    price: number,
+    price_year: number,
+    icon: string,
+    tariff_level: number
 }
 
 const defaultValue: { user: IAuthStore, profile: IProfile } = {
@@ -33,7 +45,17 @@ const defaultValue: { user: IAuthStore, profile: IProfile } = {
         user_id: '',
         name: '',
         email: '',
-        tariff: {},
+        tariff: {
+            $id: '',
+            $updatedAt: '',
+name: '',
+            desc: '',
+            enabled: true,
+            price: 0,
+            price_year: 0,
+            icon: '',
+            tariff_level: 0
+        },
         requests: 0,
         used_requests: 0,
         type: '',
@@ -47,8 +69,21 @@ export const useAuthStore = defineStore('auth', {
 
     getters: {
         isAuth: state => state.user.status,
-        getCurrentTariff() {
-            this.profile.tariff
+        getCurrentTariff(): ITariff {
+            return this.profile.tariff
+        },
+        getCurrentTariffUpdated(): string {
+            const updatedAt = this.profile.tariff.$updatedAt; // "2024-04-20T09:07:13.254+00:00"
+            const date = new Date(updatedAt);
+            const formattedDate = date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            });
+            return formattedDate; // "20.04.2024"
+        },
+        getCurrentTariffLevel(): number {
+            return this.profile.tariff.tariff_level
         },
         getUserKey(): string {
             return this.profile.key

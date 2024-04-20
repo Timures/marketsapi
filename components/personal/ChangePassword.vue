@@ -1,4 +1,8 @@
 <template>
+    <div class="modal-head">
+        <h2 class="h3">Сменить пароль</h2>
+    </div>
+    <!-- end .modal-head-->
     <form @submit.prevent="handleChangePassword">
         <div class="form-el">
             <div class="form-label">Старый пароль</div>
@@ -30,7 +34,9 @@
 <script setup lang="ts">
 import { account } from "@/utils/appwrite";
 import { ref, computed } from 'vue';
+
 const props = defineProps<{ onClose?: () => void }>();
+
 const oldPassword = ref('');
 const password = ref('');
 const repeatPassword = ref('');
