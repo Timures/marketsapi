@@ -4,14 +4,21 @@ const authStore = useAuthStore()
 /** Change Plan Modal */
 const modalChangePlanStatus = ref<boolean>(false)
 
-const handleChangePlan = () => {
+const handleChangePlanModal = () => {
     modalChangePlanStatus.value = true
 }
 
-const closeChangePlan = () => {
-    modalChangePlanStatus.value = false
+/** Buy Requests Modal */
+const modalBuyRequestsStatus = ref<boolean>(false)
+
+const handleBuyRequestsModal = () => {
+    modalBuyRequestsStatus.value = true
 }
 
+const closeModal = () => {
+    if(modalChangePlanStatus.value) { modalChangePlanStatus.value = false }
+    if(modalBuyRequestsStatus.value) { modalBuyRequestsStatus.value = false }
+}
 
 const currentTariff = computed(() => ({
     name: authStore.getCurrentTariff.name,
@@ -37,10 +44,10 @@ const currentTariff = computed(() => ({
             организация исходит из тарифа за один квадратный метр общей.</div>
         <!-- end .text-->
         <div class="btns">
-            <button class="btn btn-big btn-pink-black js_modal" @click="handleChangePlan">
+            <button class="btn btn-big btn-pink-black js_modal" @click="handleChangePlanModal">
                 <span>Сменить тариф</span>
             </button>
-            <button class="btn btn-big btn-grey js_modal" href="#buy-requests">
+            <button class="btn btn-big btn-grey js_modal" @click="handleBuyRequestsModal">
                 <span>Докупить запросы</span>
             </button>
         </div>
@@ -48,7 +55,11 @@ const currentTariff = computed(() => ({
     </div>
     <!-- end .plan-->
     <CommonModal class="modal-plan":is-open="modalChangePlanStatus" @close="modalChangePlanStatus = false">
-        <PersonalChangePlan :on-close="closeChangePlan" />
+        <PersonalChangePlan :on-close="closeModal" />
+    </CommonModal>
+    <!-- end personal change plan modal -->
+    <CommonModal class="modal-plan":is-open="modalBuyRequestsStatus" @close="modalBuyRequestsStatus = false">
+        <PersonalBuyRequests :on-close="closeModal" />
     </CommonModal>
 </template>
 

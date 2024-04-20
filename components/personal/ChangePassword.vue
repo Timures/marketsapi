@@ -1,36 +1,3 @@
-<template>
-    <div class="modal-head">
-        <h2 class="h3">Сменить пароль</h2>
-    </div>
-    <!-- end .modal-head-->
-    <form @submit.prevent="handleChangePassword">
-        <div class="form-el">
-            <div class="form-label">Старый пароль</div>
-            <input class="input" type="password" v-model="oldPassword" @input="validateOldPassword">
-            <div class="form-subtext red" v-if="isOldPasswordInvalid">Пароль не верный</div>
-        </div>
-        <!-- end .form-el-->
-        <div class="form-el">
-            <div class="form-label">Новый пароль</div>
-            <input class="input" type="password" v-model="password" @input="validateNewPassword">
-            <div class="form-subtext red" v-if="isNewPasswordInvalid">Пароль должен быть более 4 символов</div>
-        </div>
-        <!-- end .form-el-->
-        <div class="form-el">
-            <div class="form-label">Повторите новый пароль</div>
-            <input class="input" type="password" v-model="repeatPassword" @input="validateRepeatPassword">
-            <div class="form-subtext red" v-if="isRepeatPasswordInvalid">Пароли не совпадают</div>
-        </div>
-        <!-- end .form-el-->
-        <div class="form-btns">
-            <button class="btn btn-big btn-pink-black" type="submit" :disabled="isFormInvalid">
-                <span>Сменить пароль</span>
-            </button>
-        </div>
-        <!-- end .form-btns-->
-    </form>
-</template>
-
 <script setup lang="ts">
 import { account } from "@/utils/appwrite";
 import { ref, computed } from 'vue';
@@ -76,3 +43,37 @@ const isFormInvalid = computed(() => {
     return isOldPasswordInvalid.value || isNewPasswordInvalid.value || isRepeatPasswordInvalid.value;
 });
 </script>
+
+<template>
+    <div class="modal-head">
+        <h2 class="h3">Сменить пароль</h2>
+    </div>
+    <!-- end .modal-head-->
+    <form @submit.prevent="handleChangePassword">
+        <div class="form-el">
+            <div class="form-label">Старый пароль</div>
+            <input class="input" type="password" v-model="oldPassword" @input="validateOldPassword">
+            <div class="form-subtext red" v-if="isOldPasswordInvalid">Пароль не верный</div>
+        </div>
+        <!-- end .form-el-->
+        <div class="form-el">
+            <div class="form-label">Новый пароль</div>
+            <input class="input" type="password" v-model="password" @input="validateNewPassword">
+            <div class="form-subtext red" v-if="isNewPasswordInvalid">Пароль должен быть более 4 символов</div>
+        </div>
+        <!-- end .form-el-->
+        <div class="form-el">
+            <div class="form-label">Повторите новый пароль</div>
+            <input class="input" type="password" v-model="repeatPassword" @input="validateRepeatPassword">
+            <div class="form-subtext red" v-if="isRepeatPasswordInvalid">Пароли не совпадают</div>
+        </div>
+        <!-- end .form-el-->
+        <div class="form-btns">
+            <button class="btn btn-big btn-pink-black" type="submit" :disabled="isFormInvalid">
+                <span>Сменить пароль</span>
+            </button>
+        </div>
+        <!-- end .form-btns-->
+    </form>
+</template>
+
