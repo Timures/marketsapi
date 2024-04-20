@@ -2,6 +2,7 @@
 import { account } from '@/utils/appwrite'
 import { useAuthStore } from "@/store/auth.store";
 import { usePlansStore } from '~/store/plans.store'
+import { useProlongStore } from '~/store/prolong.store';
 
 const store = useAuthStore()
 const router = useRouter()
@@ -17,6 +18,9 @@ onMounted(async () => {
 
 		const plansStore = usePlansStore()    	
 		await plansStore.fetchPlans();
+
+		const prolongStore = useProlongStore()
+		await prolongStore.fetchProlongPrices()
 		
 		isLoaded.value = false
 	} catch (error) {

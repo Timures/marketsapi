@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { DB } from "@/utils/appwrite.ts";
+import { DB } from "@/utils/appwrite";
 import { DB_ID, COLLECTION_FAQ_ID } from "@/app.constants";
 
 interface Faq {

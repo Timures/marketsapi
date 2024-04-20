@@ -1,29 +1,68 @@
 <script setup lang="ts">
+import { useAuthStore } from "@/store/auth.store";
+import { useProlongStore } from '@/store/prolong.store';
+
+const authStore = useAuthStore()
+
+
 let swiperInstance: any | null = null;
 const isFirstSlide = ref(false);
 const isLastSlide = ref(false);
 const onSwiperInit = (swiper: any) => {
-  swiperInstance = swiper;
+    swiperInstance = swiper;
 
-  // Watch for changes in swiperInstance.realIndex
-  watch(() => swiperInstance?.realIndex, (newValue) => {
-    isFirstSlide.value = newValue === 0;
-    isLastSlide.value = newValue === swiperInstance.slides.length - 1;
-  });
+    // Watch for changes in swiperInstance.realIndex
+    watch(() => swiperInstance?.realIndex, (newValue) => {
+        activeSlideIndex.value = newValue;
+        isFirstSlide.value = newValue === 0;
+        isLastSlide.value = newValue === swiperInstance.slides.length - 1;
+    });
 };
 
 const nextSlide = () => {
-  if (swiperInstance && !isLastSlide.value) {
-    swiperInstance.slideNext();
-  }
+    if (swiperInstance && !isLastSlide.value) {
+        swiperInstance.slideNext();
+    }
 };
 
 const prevSlide = () => {
-  if (swiperInstance && !isFirstSlide.value) {
-    swiperInstance.slidePrev();
-  }
+    if (swiperInstance && !isFirstSlide.value) {
+        swiperInstance.slidePrev();
+    }
 };
 
+
+
+const prolongStore = useProlongStore()
+
+const prolongPricesOptions = computed(() => {
+    return prolongStore.getProlongPrice
+})
+// Переменная для хранения индекса активного слайда
+const activeSlideIndex = ref(0);
+
+const handleProlongPlan = () => {
+    // Получаем информацию о выбранном тарифе по индексу активного слайда
+    const selectedTariff = prolongPricesOptions.value[activeSlideIndex.value];
+    const daysVolume = authStore.getKeyExpired + (selectedTariff.month * 30); // 44 + (1 * 30) // текущее значение дней + тариф умножаемый на 30, 1 месяц = 30 дней, 3 месяца = 90 дней
+    const prolongData = { key_days: daysVolume }
+    authStore.patchProfileData(prolongData)
+    console.log('selectedProlongValue ', prolongData);
+}
+
+const monthText = (month: number) => {
+    // Определение формы слова "месяц" в зависимости от числительного
+    if (month === 1 || (month % 10 === 1 && month % 100 !== 11)) {
+        return `${month} месяц`;
+    } else if (
+        (month > 1 && month < 5) ||
+        ((month % 10 > 1 && month % 10 < 5) && (month % 100 < 10 || month % 100 > 20))
+    ) {
+        return `${month} месяца`;
+    } else {
+        return `${month} месяцев`;
+    }
+}
 </script>
 
 <template>
@@ -46,24 +85,9 @@ const prevSlide = () => {
                     prevEl: '.prolong-slider-minus',
                     nextEl: '.prolong-slider-plus',
                 }" class="prolong-slider">
-
-                    <SwiperSlide>
-                        <div>1 месяц за 3500 ₽</div>
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <div>3 месяца за 9 500 ₽</div>
-                        <div class="small blue">выгода 100₽</div>
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <div>6 месяцев за 18 900 ₽</div>
-                        <div class="small blue">выгода 2100₽</div>
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <div>12 месяцев за 38 500 ₽</div>
-                        <div class="small blue">выгода 3500₽</div>
+                    <SwiperSlide v-for="(option, option_index) in prolongPricesOptions" :key="option_index">
+                        <div>{{ monthText(option.month) }} за {{ new Intl.NumberFormat("ru-RU").format(option.price) }} ₽</div>
+                        <div v-if="option.profit > 0" class="small blue">{{ option.profit }}₽</div>
                     </SwiperSlide>
                 </Swiper>
 
@@ -81,9 +105,31 @@ const prevSlide = () => {
             </div>
             <!-- end .wrap-->
 
-            <div class="btn btn-pink-black btn-big"><span>Продлить тариф</span></div>
+            <button @click="handleProlongPlan" class="btn btn-pink-black btn-big"><span>Продлить тариф</span></button>
         </div>
         <!-- end .row-->
     </div>
     <!-- end .prolong-->
 </template>
+
+<style scoped>
+.prolong-label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Скрываем кружок радиокнопки */
+input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+</style>

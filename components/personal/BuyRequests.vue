@@ -79,7 +79,7 @@ const userRequests = computed(() => ({
         <div class="checks">
             <label v-for="option in options" :key="option.value">
                 <input type="radio" :name="radioName" :value="option.value" v-model="selectedValue">
-                <span class="btn"><span>{{ option.label }}</span></span>
+                <button class="btn"><span>{{ option.label }}</span></button>
             </label>
         </div>
         <!-- end .checks-->
