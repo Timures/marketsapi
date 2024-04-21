@@ -27,7 +27,7 @@ const handleAccordion = (item: Faq) => {
 </script>
 
 <template>
-  <div class="faq">
+  <div class="faq" id="mainFaq">
     <div class="head">
       <h2 class="h2">
         Частые<br />

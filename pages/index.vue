@@ -39,7 +39,7 @@ onMounted(async () => {
 
 				<!-- end .hero-->
 
-				<CommonDable />
+				<MainDable />
 
 				<!-- end .table-->
 				<MainPlans />

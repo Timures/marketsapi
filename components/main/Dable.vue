@@ -235,7 +235,7 @@ onMounted(() => {
 
 <template>
   <Transition name="fade">
-  <div class="table">
+  <div class="table" id="mainTable">
     <div class="slider-table-progress">
       <div :class="{ active: currentSlideIndex === 0 }"></div>
       <div :class="{ active: currentSlideIndex >= 1 }"></div>
