@@ -87,12 +87,12 @@ const handleToggleMenu = (anchor:string | null) => {
       <NuxtLink class="logo" href="/">
         <img src="/img/logo.svg" alt="MarketsAPI" />
       </NuxtLink>
-      <div class="toggle-menu btn btn-grey" title="Меню" @click="handleToggleMenu()">
+      <div class="toggle-menu btn btn-grey" title="Меню" @click="handleToggleMenu">
         <svg width="24" height="24">
           <use xlink:href="/img/sprite.svg#menu"></use>
         </svg>
       </div>
-      <div class="menu-fader" @click="handleToggleMenu()"></div>
+      <div class="menu-fader" @click="handleToggleMenu"></div>
       <nav class="menu">
         <ul>
           <li>
