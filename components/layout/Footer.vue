@@ -7,14 +7,12 @@
         <div class="logo"><img src="/img/logo.svg" alt="MarketsAPI" /></div>
         <ul class="links">
           <li>
-            <a class="btn btn-grey btn-small" href="#"
-              ><span>Публичная оферта</span></a
-            >
+            <NuxtLink class="btn btn-grey btn-small" to="#"
+              ><span>Публичная оферта</span></NuxtLink>
           </li>
           <li>
-            <a class="btn btn-grey btn-small" href="#"
-              ><span>Политика обработки персональных данных</span></a
-            >
+            <NuxtLink class="btn btn-grey btn-small" to="#"
+              ><span>Политика обработки персональных данных</span></NuxtLink>
           </li>
         </ul>
         <!-- end .links-->

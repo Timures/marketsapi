@@ -15,14 +15,6 @@ const options = [
     { label: '10000', value: '10000' },
 ];
 
-// Обработчик изменения значения радио-инпута
-const handleBuyRequests = () => {
-    const buyRequestsData = {requests:parseInt(selectedValue.value) + authStore.getRequestValue}
-    authStore.patchUserRequestsValue(buyRequestsData)
-    console.log('selectedValue.value ', selectedValue.value);
-    // Emit close event to close the modal after successful requsts buy
-    props.onClose && props.onClose();
-}
 /** Выводим время до полуночи */
 
 const now = new Date(); // Текущая дата и время
@@ -62,6 +54,16 @@ onUnmounted(() => {
         intervalId = null;
     }
 });
+
+// Обработчик изменения значения радио-инпута
+const handleBuyRequests = () => {
+    const buyRequestsData = {requests:parseInt(selectedValue.value) + authStore.getRequestValue}
+    authStore.patchProfileData(buyRequestsData)
+    // console.log('selectedValue.value ', selectedValue.value);
+    // Emit close event to close the modal after successful requsts buy
+    props.onClose && props.onClose();
+}
+
 /** Выводим текущее количество использованных запросов */
 const userRequests = computed(() => ({
     used: authStore.getRequestUsed,
@@ -75,22 +77,24 @@ const userRequests = computed(() => ({
         <div class="text">Запросов использовано сегодня: {{ userRequests.used }} из {{ userRequests.all }}</div>
     </div>
     <!-- end .modal-head-->
-    <form class="buy-requests"  @submit.prevent="handleBuyRequests">
+    <div class="buy-requests">
         <div class="checks">
             <label v-for="option in options" :key="option.value">
-                <input type="radio" :name="radioName" :value="option.value" v-model="selectedValue">
-                <button class="btn"><span>{{ option.label }}</span></button>
-            </label>
+    <input type="radio" :name="radioName" :value="option.value" v-model="selectedValue">
+    <div class="btn">{{ option.label }}</div>
+</label>
         </div>
         <!-- end .checks-->
-        <button class="btn btn-pink-black btn-big" type="submit"><span>Купить запросы</span></button>
+        <button class="btn btn-pink-black btn-big" @click="handleBuyRequests">
+            <span>Купить запросы {{ selectedValue }}</span>
+        </button>
         <div class="info">
             <h3 class="h3">Внимание!</h3>
             <div class="text">Дополнительные запросы действуют только на текущие сутки.<br>
                 Осталось времени сегодня: <strong>{{ timeUntilMidnight }}</strong></div>
         </div>
         <!-- end .info-->
-    </form>
+    </div>
     <!-- end .buy-requests-->
 </template>
 

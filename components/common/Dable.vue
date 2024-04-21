@@ -2,6 +2,7 @@
 import { useServersStore } from '@/store/servers.store'
 import { ref, onMounted, watch } from 'vue';
 import { Collapse } from 'vue-collapsed'
+import { useTippy } from 'vue-tippy'
 
 import type { MainParams } from '@/types/servers'
 // Получите доступ к хранилищу серверов
@@ -207,6 +208,29 @@ onMounted(async () => {
     console.error('Ошибка при загрузке данных из сервера.');
   }
 });
+
+const copyText = 'Код скопирован'
+const copyRef = ref<HTMLButtonElement | null>(null);
+
+onMounted(() => {
+    if (copyRef.value) {
+        useTippy(copyRef.value, {
+            theme: 'light',
+            content: copyText,
+            // show and hide delay are 100ms
+            delay: 100,
+            arrow: true,
+            hideOnClick: false,
+            onShow(instance) {
+                setTimeout(() => {
+                    instance.hide();
+                }, 1000);
+            },
+            trigger: 'click', // Изменяем триггер на клик
+        });
+        
+  }
+});
 </script>
 
 <template>
@@ -383,18 +407,10 @@ onMounted(async () => {
                 <div class="arrow"></div>
               </div>
               <!-- end .table-select-->
-              <div class="btn-tippy">
-                <transition name="fade">
-                  <div class="tippy" v-show="copyStatus">
-                    <div class="bubble">Код скопирован</div>
-                  </div>
-                </transition>
-
-                <button class="btn btn-pink-black js_copy-table-code "
-                  @click="copyToClipboard(selectedLangOption.value)">
+              <button class="btn btn-pink-black js_copy-table-code"
+                  @click="copyToClipboard(selectedLangOption.value)" ref="copyRef">
                   <span>Копировать код</span>
                 </button>
-              </div>
             </div>
             <!-- end .table-inner-head-->
 

@@ -12,7 +12,6 @@ const currentLevel = authStore.getCurrentTariffLevel
 const plansToLevelUp = ref()
 /** Вывод конвертации дней */
 
-const newKeyExpired = ref(0)
 const convertPlanDays = (tariffLevel: number | undefined): number => {
     if (tariffLevel === undefined) {
         console.error('Уровень тарифа не определен');
@@ -47,7 +46,7 @@ const convertPlanDays = (tariffLevel: number | undefined): number => {
 // Функция для изменения тарифа пользователя
 const changeTariff = (tariffId: string, convertDays: number) => {
     const changeData = {tariff:tariffId, key_days:convertDays}
-    authStore.patchUserPlan(changeData)
+    authStore.patchProfileData(changeData)
    
   console.log('change plan', tariffId);
   // Emit close event to close the modal after successful password change

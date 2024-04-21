@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth.store";
+import { useTippy } from 'vue-tippy'
+
 const store = useAuthStore()
-
-
 
 // Create a ref to store the copy status message
 const copyStatus = ref<boolean | null>(null);
@@ -22,6 +22,26 @@ const copyToClipboard = (text: string) => {
 		});
 };
 
+const copyText = 'Ключ скопирован'
+const tooltipButton = ref<HTMLButtonElement | null>(null);
+
+onMounted(() => {
+	if (tooltipButton.value) {
+		useTippy(tooltipButton.value, {
+			theme: 'light',
+			content: copyText,
+			delay: 100,
+			arrow: true,
+			hideOnClick: false,
+			onShow(instance) {
+				setTimeout(() => {
+					instance.hide();
+				}, 1000);
+			},
+			trigger: 'click', // Изменяем триггер на клик
+		});
+	}
+});
 </script>
 
 <template>
@@ -31,66 +51,14 @@ const copyToClipboard = (text: string) => {
 			<div class="wrap-input">
 				<input class="input" id="copy-key" type="text" v-model="store.getUserKey" readonly>
 			</div>
-			<div class="btn-tippy">
-				<transition name="fade">
-					<div class="tippy" v-show="copyStatus">
-						<div class="bubble">Код скопирован</div>
-					</div>
-				</transition>
 
-				<button class="btn btn-big btn-grey js_copy" @click="copyToClipboard(store.getUserKey)"><span
-						v-show="!copyStatus">Скопировать</span>
-					<span v-show="copyStatus">Скопировано</span>
-				</button>
-			</div>
+			<button class="btn btn-big btn-grey js_copy" @click="copyToClipboard(store.getUserKey)" ref="tooltipButton">
+				<span v-show="!copyStatus">Скопировать</span>
+				<span v-show="copyStatus">Скопировано</span>
+			</button>
 
 		</div>
 		<!-- end .row-->
 	</div>
 	<!-- end .key-->
 </template>
-
-<style lang="scss" scoped>
-
-.btn-tippy {
-  position: relative;
-}
-
-.tippy {
-  position: absolute;
-  top: -55%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  color: #000;
-  min-width: 150px;
-  width: 100%;
-  
-
-}
-
-.bubble {
-  position: relative;
-  padding: 4px 8px;
-  background: #fff;
-  -webkit-border-radius: 16px;
-  -moz-border-radius: 16px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: -1px 1px 14px -1px rgba(0,0,0,0.71);
-}
-
-.bubble:after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 8px 8px 0;
-  border-color: #fff transparent;
-  display: block;
-  width: 0;
-  z-index: 1;
-  margin-left: -8px;
-  bottom: -8px;
-  left: 50%;
-}
-</style>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '#imports';
+import { useTippy } from 'vue-tippy'
+
 const authStore = useAuthStore()
 /** Change Plan Modal */
 const modalChangePlanStatus = ref<boolean>(false)
@@ -26,6 +28,19 @@ const currentTariff = computed(() => ({
     icon: authStore.getCurrentTariff.icon,
 }));
 
+const requestsText = 'Неофициальный API интерфейс c актуальными, a так же историческими данными для ваших систем.'
+// const detailsRef = ref<HTMLButtonElement | null>(null);
+// onMounted(() => {
+// 	if (detailsRef.value) {
+// 		useTippy(detailsRef.value, {
+// 			theme: 'light',
+// 			content: requestsText,
+// 			delay: 100,
+// 			arrow: true,
+// 		});
+// 	}
+// });
+
 </script>
 
 <template>
@@ -36,8 +51,12 @@ const currentTariff = computed(() => ({
             <div class="txt">Ваш тариф с {{  currentTariff.updated }}</div>
         </div>
         <!-- end .head-->
-        <div class="detail">1000 запросов в сутки<span class="pic-help"
-                data-tippy-content="Неофициальный API интерфейс с актуальными, а так же историческими данными для ваших систем."></span>
+        <div class="detail">1000 запросов в сутки<span class="pic-help"  v-tippy="{
+          content: requestsText,
+          theme: 'light',
+          delay: 100,
+          arrow: true,
+        }"></span>
         </div>
         <!-- end .detail-->
         <div class="text">При расчёте платы за содержание и ремонт общего имущества дома управляющая

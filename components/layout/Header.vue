@@ -53,9 +53,9 @@ const closeChangePassword = () => {
 
         <ul v-if="!store.isAuth">
           <li>
-            <a class="btn btn-grey btn-small" href="/login">
+            <NuxtLink class="btn btn-grey btn-small" href="/login">
               <span>Войти в кабинет</span>
-            </a>
+            </NuxtLink>
           </li>
         </ul>
 

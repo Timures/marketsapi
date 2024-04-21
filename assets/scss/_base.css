@@ -528,7 +528,7 @@ a {
 .tippy-box[data-theme='light'] .tippy-content {
 		font: normal 15px/1.3 var(--font);
 		text-align: center;
-		padding: 20px;
+		padding: 8px 12px;
 }
 .tippy-box[data-theme='small'] .tippy-content {
 		font: normal 15px/1.3 var(--font);

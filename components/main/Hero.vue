@@ -1,4 +1,20 @@
 <script setup lang="ts">
+import { useScrollStore } from '@/store/scroll.store'
+
+const scrollStore = useScrollStore();
+
+const smoothScrollToElement = () => {
+  const elementToScroll = scrollStore.elementToScroll;
+  if (elementToScroll) {
+    const scrollPosition = elementToScroll.offsetTop - 100; // Отступ сверху
+    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+  }
+};
+
+onMounted(() => {
+  // You can also watch the state if necessary
+  // console.log('Element to scroll:', scrollStore.elementToScroll);
+});
 </script>
 
 <template>
@@ -15,7 +31,8 @@
           Неофициальный API интерфейс с актуальными, а так же историческими
           данными для ваших систем аналитики, телеграм ботов и других целей
         </div>
-        <a class="btn btn-pink-white link-choose ready" href="#"><div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div><div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div></a>
+        <button class="btn btn-pink-white link-choose ready" @click="smoothScrollToElement">
+          <div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div><div><span>В</span><span>ы</span><span>б</span><span>р</span><span>а</span><span>т</span><span>ь</span><span> </span><span>т</span><span>а</span><span>р</span><span>и</span><span>ф</span></div></button>
       </div>
     </div>
     <!-- end .main-->

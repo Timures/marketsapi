@@ -96,7 +96,7 @@ html:not(.open-modal) .modal-fader {
 }
 @media only screen and (min-width: 1000px) {
 		.modal {
-				width: calc(100% - var(--side-padding) * 2);
+				/* width: calc(100% - var(--side-padding) * 2); */
 		}
 		.modal-content {
 				padding: 50px;

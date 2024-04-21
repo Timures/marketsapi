@@ -16,8 +16,7 @@
   </template>
   
   <script setup lang="ts">
-  import { defineProps, watchEffect, onUnmounted } from 'vue';
-  
+
   // Props
   const props = defineProps<{
     isOpen: boolean;

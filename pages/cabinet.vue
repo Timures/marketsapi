@@ -8,6 +8,10 @@ const store = useAuthStore()
 const router = useRouter()
 const isLoaded = ref(false)
 
+useSeoMeta({
+  title: "Кабинет | MarketApi",
+});
+
 onMounted(async () => {
 	try {
 		isLoaded.value = true

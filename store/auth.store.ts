@@ -113,28 +113,10 @@ export const useAuthStore = defineStore("auth", {
           Query.equal("userId", this.user.$id),
         ]);
         this.profile = response.documents[0]; // Обновляем массив планов данными из запроса
-        console.log("response profile ", this.user.$id);
+        // console.log("response profile ", this.user.$id);
       } catch (error) {
         console.error(error); // Обрабатываем возможные ошибки
       }
-    },
-    async patchUserPlan(data: object) {
-        try {
-            const response = await DB.updateDocument(DB_ID, COLLECTION_USERS, this.profile.$id, data);
-            this.fetchProfile()
-            console.log("response updateDocument patchUserPlan", this.profile.$id);
-          } catch (error) {
-            console.error(error); // Обрабатываем возможные ошибки
-          }
-    },
-    async patchUserRequestsValue(data: object) {
-        try {
-            const response = await DB.updateDocument(DB_ID, COLLECTION_USERS, this.profile.$id, data);
-            this.fetchProfile()
-            console.log("response updateDocument patchUserRequestsValue", this.profile.$id);
-          } catch (error) {
-            console.error(error); // Обрабатываем возможные ошибки
-          }
     },
     async patchProfileData(data: object) {
         try {

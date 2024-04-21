@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { usePlansStore } from '~/store/plans.store'
-// import { Plan } from '@/types/plan'
+import { useScrollStore } from '@/store/scroll.store'
+import { useTippy } from 'vue-tippy'
 
-// interface Plan {
-//     $id: string
-//     name: string
-//     desc: string
-//     price: number
-//     price_year: number
-//     icon: string
-//   }
 
+/** Так как скролл вызывается в другом компоненте, используется store  */
+const elementToScroll = ref<HTMLElement | null>(null);
+const scrollStore = useScrollStore();
+
+onMounted(() => {
+  elementToScroll.value = document.getElementById('elementToScroll');
+  if (elementToScroll.value) {
+    scrollStore.setElementToScroll(elementToScroll.value);
+  }
+});
 // Реактивная переменная для хранения данных планов
 const plansStore = usePlansStore()
 
@@ -25,13 +28,15 @@ const pricesByYear = ref(false)
 const changePriceBy = () => {
   pricesByYear.value = !pricesByYear.value
 }
+
+const requestsText = 'Неофициальный API интерфейс c актуальными, a так же историческими данными для ваших систем.'
 </script>
 
 
 
 <template>
   <div class="plans" :class="{yearly : pricesByYear}" id="mainPlans">
-    <div class="head">
+    <div class="head" id="elementToScroll">
       <h2 class="h2">Тарифы</h2>
       <div class="trigger">
         <div @click="changePriceBy">Ежемесячно</div>
@@ -67,9 +72,15 @@ const changePriceBy = () => {
           <div class="pic"><img :src="slide.icon" alt="" /></div>
           <h3 class="h3">{{ slide.name }}</h3>
           <div class="text">
-            {{ slide.desc }}<span
+            {{ slide.desc }}
+            <span
               class="pic-help"
-              data-tippy-content="Неофициальный API интерфейс с актуальными, а так же историческими данными для ваших систем."
+              v-tippy="{
+          content: requestsText,
+          theme: 'light',
+          delay: 100,
+          arrow: true,
+        }"
             ></span>
           </div>
           <!-- end .text-->
