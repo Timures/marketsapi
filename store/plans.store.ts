@@ -19,18 +19,16 @@ export const usePlansStore = defineStore("plans", {
     plans: [] as Plan[],
   }),
   actions: {
+
     async fetchPlans() {
       try {
         const response = await DB.listDocuments(DB_ID, COLLECTION_TARIFFS);
-        this.plans = response.documents.map((doc: any) => ({
-          $id: doc.$id,
-          name: doc.name,
-          desc: doc.desc,
-          price: doc.price,
-          price_year: doc.price_year,
-          icon: doc.icon,
-          tariff_level: doc.tariff_level,
-        })); // Обновляем массив планов данными из запроса
+        this.plans = response.documents // Обновляем массив планов данными из запроса
+
+        // const response = await fetch("/data/tariffs.json");
+        // const jsonData = await response.json();
+        // this.plans = jsonData; 
+        // console.log(response)
       } catch (error) {
         console.error(error); // Обрабатываем возможные ошибки
       }

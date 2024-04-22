@@ -47,7 +47,7 @@ const handleProlongPlan = () => {
     const daysVolume = authStore.getKeyExpired + (selectedTariff.month * 30); // 44 + (1 * 30) // текущее значение дней + тариф умножаемый на 30, 1 месяц = 30 дней, 3 месяца = 90 дней
     const prolongData = { key_days: daysVolume }
     authStore.patchProfileData(prolongData)
-    console.log('selectedProlongValue ', prolongData);
+    // console.log('selectedProlongValue ', prolongData);
 }
 
 const monthText = (month: number) => {

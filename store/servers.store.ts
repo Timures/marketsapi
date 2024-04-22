@@ -26,7 +26,10 @@ export const useServersStore = defineStore("servers", {
     async fetchServers() {
       try {
         this.loading = true;
-        // Provide the correct relative URL to your JSON file
+        /** Создавать в Appwrite.io слишком долго, поэтому тяну из json */
+        // const response = await DB.listDocuments(DB_ID, COLLECTION_MARKETS);
+        // this.plans = response.documents // Обновляем массив планов данными из запроса
+
         const response = await fetch("/data/servers.json");
 
         if (!response.ok) {

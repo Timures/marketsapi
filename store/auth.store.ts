@@ -122,7 +122,7 @@ export const useAuthStore = defineStore("auth", {
         try {
             const response = await DB.updateDocument(DB_ID, COLLECTION_USERS, this.profile.$id, data);
             this.fetchProfile()
-            console.log("response updateDocument patchUserProlongPlan", this.profile.$id);
+            // console.log("response updateDocument patchUserProlongPlan", this.profile.$id);
           } catch (error) {
             console.error(error); // Обрабатываем возможные ошибки
           }

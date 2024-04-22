@@ -60,13 +60,13 @@ const handleSelectLang = () => {
 /** Выбор статус ответа */
 const selectedResponseOption = ref()
 const handleSelectResponse = () => {
-  console.log('selectedResponseOption ', selectedResponseOption.value)
+  // console.log('selectedResponseOption ', selectedResponseOption.value)
   serversStore.selectResponse(selectedResponseOption.value)
 }
 /** Test Endpoint */
 const isResultTestEndpoint = ref(false)
 const handleTestEndpoint = () => {
-  console.log('test endpoint');
+  // console.log('test endpoint');
   if (selectedTab.value === 'get') {
     fetchGetData()
     isResultTestEndpoint.value = true
