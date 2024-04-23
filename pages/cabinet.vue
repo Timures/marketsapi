@@ -11,6 +11,9 @@ const isLoaded = ref(false)
 useSeoMeta({
   title: "Кабинет | MarketApi",
 });
+definePageMeta({
+  middleware: 'auth'
+})
 
 onMounted(async () => {
 	try {
