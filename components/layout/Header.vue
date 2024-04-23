@@ -23,10 +23,14 @@ const closeChangePassword = () => {
 
 /** Toogle mobile menu */
 const isMobMenuOpen = ref(false)
-const handleToggleMenu = (anchor:string | null) => {
+const handleToggleMenu = () => {
   isMobMenuOpen.value = !isMobMenuOpen.value
+}
+
+/** Scroll to */
+const handleScrollTo = (anchor: string) => {
   const offset = ref(-100);
-  // Скролл к якорю
+  // Scroll to anchor
   if(anchor) {
     setTimeout(() => {
     const element = document.getElementById(anchor); // Замените 'anchorId' на id нужного якоря
@@ -38,11 +42,9 @@ const handleToggleMenu = (anchor:string | null) => {
     });
     }
   }, 300); // Время задержки, чтобы скролл произошел после закрытия меню
+  isMobMenuOpen.value = false
   }
-  
- 
 }
-
   // Block body scroll when modal is open
   const blockBodyScroll = () => {
     if (typeof document !== 'undefined' && document.body) {
@@ -96,17 +98,17 @@ const handleToggleMenu = (anchor:string | null) => {
       <nav class="menu">
         <ul>
           <li>
-            <NuxtLink @click.native="handleToggleMenu('mainTable')" class="btn btn-grey btn-small" to="/">
+            <NuxtLink @click.native="handleScrollTo('mainTable')" class="btn btn-grey btn-small" to="/">
               <span>Endpoints / Методы</span>
               </NuxtLink>
           </li>
           <li>
-            <NuxtLink @click.native="handleToggleMenu('mainPlans')" class="btn btn-grey btn-small" to="/">
+            <NuxtLink @click.native="handleScrollTo('mainPlans')" class="btn btn-grey btn-small" to="/">
               <span>Цены</span>
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink @click.native="handleToggleMenu('mainFaq')" class="btn btn-grey btn-small" to="/">
+            <NuxtLink @click.native="handleScrollTo('mainFaq')" class="btn btn-grey btn-small" to="/">
               <span>Поддержка</span>
             </NuxtLink>
           </li>
