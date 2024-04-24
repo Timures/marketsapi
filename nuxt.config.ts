@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
-  modules: ['@pinia/nuxt', 'nuxt-swiper'],
+  modules: ['@pinia/nuxt', 'nuxt-swiper', '@pinia-plugin-persistedstate/nuxt'],
   pinia: {
     storesDirs: ["./store/**"],
   },

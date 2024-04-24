@@ -67,7 +67,12 @@ const defaultValue: { user: IAuthStore; profile: IProfile } = {
 };
 
 export const useAuthStore = defineStore("auth", {
-  state: () => defaultValue,
+  // Set persist to true
+  persist: true,
+  state: () => ({
+    user: { ...defaultValue.user },
+    profile: { ...defaultValue.profile },
+  }),
 
   getters: {
     isAuth: (state) => state.user.status,
@@ -103,6 +108,7 @@ export const useAuthStore = defineStore("auth", {
       return this.profile.used_requests;
     },
   },
+
   actions: {
     clear() {
       this.$patch(defaultValue);
@@ -130,7 +136,7 @@ export const useAuthStore = defineStore("auth", {
             console.error(error); // Обрабатываем возможные ошибки
           }
     }
-  },
+  },  
 });
 
 export const useIsLoadingStore = defineStore("isLoading", {
