@@ -193,6 +193,11 @@ const testEndpointAndNext = () => {
   nextSlide()
 }
 
+const copyText = 'Код скопирован'
+const copyRef = ref<HTMLButtonElement | null>(null);
+
+const tableCode = ref<HTMLElement | null>(null);
+
 // Загрузите данные и установите начальное значение после монтирования компонента
 onMounted(async () => {
   await serversStore.fetchServers(); // Загрузка данных из хранилища
@@ -207,319 +212,353 @@ onMounted(async () => {
   } else {
     console.error('Ошибка при загрузке данных из сервера.');
   }
+
+  // -- copy
+  if (copyRef.value) {
+    useTippy(copyRef.value, {
+      theme: 'light',
+      content: copyText,
+      // show and hide delay are 100ms
+      delay: 100,
+      arrow: true,
+      hideOnClick: false,
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 1000);
+      },
+      trigger: 'click', // Изменяем триггер на клик
+    });
+
+  }
+  // -- copy end
+
+
 });
 
-const copyText = 'Код скопирован'
-const copyRef = ref<HTMLButtonElement | null>(null);
 
-onMounted(() => {
-    if (copyRef.value) {
-        useTippy(copyRef.value, {
-            theme: 'light',
-            content: copyText,
-            // show and hide delay are 100ms
-            delay: 100,
-            arrow: true,
-            hideOnClick: false,
-            onShow(instance) {
-                setTimeout(() => {
-                    instance.hide();
-                }, 1000);
-            },
-            trigger: 'click', // Изменяем триггер на клик
+
+watchEffect(() => {
+  // Получаем ссылку на элемент по его ref
+  const tableCodeRef = tableCode.value;
+
+  // Проверяем, что элемент доступен в DOM
+  if (tableCodeRef) {
+    // Получаем ссылку на элемент по его ref
+    const tableCodeRef = tableCode.value;
+    
+    // Проверяем, что элемент доступен в DOM
+    if (tableCodeRef) {
+      const liElementsWithUl = tableCodeRef.querySelectorAll('li:has(ul)');
+
+      if (liElementsWithUl.length > 0) {
+        liElementsWithUl.forEach((liElement) => {
+          const link = liElement.querySelector(':scope > :not(ul)');
+
+          if (link) {
+            link.addEventListener('click', () => {
+              liElement.classList.toggle('open');
+            });
+          }
+
         });
-        
+      }
+    }
+  } else {
+    console.error('Элемент tableCode не найден в DOM');
   }
 });
 </script>
 
 <template>
   <Transition name="fade">
-  <div class="table" id="mainTable">
-    <div class="slider-table-progress">
-      <div :class="{ active: currentSlideIndex === 0 }"></div>
-      <div :class="{ active: currentSlideIndex >= 1 }"></div>
-      <div :class="{ active: currentSlideIndex === 2 }"></div>
-    </div>
-    <div class="table-version">
-      
-      <CommonDropDown :items="serversStore.getNameData" v-model="serverSelectedOption"
-        @update:modelValue="handleChangeSelectServer" />
-    </div>
+    <div class="table" id="mainTable">
+      <div class="slider-table-progress">
+        <div :class="{ active: currentSlideIndex === 0 }"></div>
+        <div :class="{ active: currentSlideIndex >= 1 }"></div>
+        <div :class="{ active: currentSlideIndex === 2 }"></div>
+      </div>
+      <div class="table-version">
+
+        <CommonDropDown :items="serversStore.getNameData" v-model="serverSelectedOption"
+          @update:modelValue="handleChangeSelectServer" />
+      </div>
 
 
-    <Swiper :slides-per-view="'auto'" :effect="'creative'" :autoplay="{
-        delay: 8000,
-        disableOnInteraction: true,
-      }" :creative-effect="{
-        prev: {
-          shadow: false,
-          translate: ['-20%', 0, -1],
-        },
-        next: {
-          translate: ['100%', 0, 0],
-        },
-      }" :breakpoints="{ 999: { slidesPerView: 1 }, 1000: { slidesPerView: 3 } }" @swiper="onSwiperInit"
-      @slideChange="onSlideChange" :navigation="{
-                    nextEl: '.slider-table-next',
-                }" class="slider-table">
+      <Swiper :slides-per-view="'auto'" :effect="'creative'" :autoplay="{
+          delay: 8000,
+          disableOnInteraction: true,
+        }" :creative-effect="{
+          prev: {
+            shadow: false,
+            translate: ['-20%', 0, -1],
+          },
+          next: {
+            translate: ['100%', 0, 0],
+          },
+        }" :breakpoints="{ 999: { slidesPerView: 1 }, 1000: { slidesPerView: 3 } }" @swiper="onSwiperInit"
+        @slideChange="onSlideChange" :navigation="{
+          nextEl: '.slider-table-next',
+        }" class="slider-table">
 
-      <SwiperSlide class="table-resizeable-left">
-        <div class="table-content">
-          <div class="table-head empty">
-            <CommonDropDown :items="serversStore.getNameData" v-model="serverSelectedOption"
-        @update:modelValue="handleChangeSelectServer" />
-          </div>
-          <div class="table-scroll-wrap">
-            <div class="table-scroll">
-              <ul class="table-main-links js_tabs">
-                <li v-for="(method, index_method) in serversStore.getMethods" :key="index_method">
-                  <button class="link" :class="{ active: selectedTab === method.type }"
-                    @click="changeSelectedTab(method.type)"><span class="table-method"
-                      :class="method.type === 'get' ? 'green' : 'blue'">{{ method.name }}</span>
-                    <span class="text">{{ method.desc }}</span>
-                  </button>
-                </li>
-              </ul>
-              <!-- end .table-main-links-->
+        <SwiperSlide class="table-resizeable-left">
+          <div class="table-content">
+            <div class="table-head empty">
+              <CommonDropDown :items="serversStore.getNameData" v-model="serverSelectedOption"
+                @update:modelValue="handleChangeSelectServer" />
             </div>
-          </div>
-          <!-- end .table-scroll-wrap-->
-        </div>
-        <!-- end .table-content-->
-
-      </SwiperSlide><!-- end table-resizeable-left -->
-
-      <SwiperSlide class="table-center">
-        <div class="table-content table-tab-content" v-for="(method, index_method) in serversStore.getMethods"
-          :key="index_method" :class="{ visible: selectedTab === method.type }" data-id="#table-tab1">
-          <div class="table-head">
-            <span class="table-method" :class="method.type === 'get' ? 'green' : 'blue'">{{ method.name
-              }}</span>
-            <span class="text">{{ method.desc }}</span>
-            <button class="btn btn-pink-black btn-test-endpoint" @click="handleTestEndpoint">
-              <span>Test endpoint</span>
-            </button>
-          </div>
-          <!-- end .table-head-->
-          <div class="table-scroll-wrap">
-            <div class="table-scroll">
-              <div class="table-descr">
-                <h4 class="title">
-                  Получение деталей товара по его URL адресу или SKU.
-                </h4>
-                Чтобы воспользоваться этим методом, подставьте интересующие
-                значения в поля ниже, примените другие настройки,
-                при необходимости и протестируйте ваш запрос, ознакомтесь
-                с ответом системы.
-              </div>
-              <!-- end .table-descr-->
-
-              <div class="table-folded open">
-                <h4 class="head" @click="openMainParams">Основные параметры</h4>
-                <Collapse :when="mainParamsStatus" class="v-collapse">
-                  <div class="inner">
-                    <div class="spacing">
-                      <div class="table-form-el">
-                        <div class="table-form-label">
-                          WBPublicAPI-Key <span class="small">ENUM</span>
-                        </div>
-                        <CommonDropDown :items="serversStore.getParamsMainData" v-model="paramsMainSelectedOption"
-                          @update:modelValue="handleParamsMainSelected" />
-                        <div class="table-form-subtext">
-                          <div class="red">обязательный параметр</div>
-                        </div>
-                      </div>
-                      <!-- end .form-el-->
-                      <div class="table-form-el">
-                        <div class="table-form-label">
-                          WBPublicAPI-Host <span class="small">STRING</span>
-                        </div>
-                        <input class="table-input" :value="paramsMainSelectedOption?.value" type="text" />
-                        <div class="table-form-subtext">
-                          <div class="red">обязательный параметр</div>
-                        </div>
-                      </div>
-                      <!-- end .form-el-->
-                    </div>
-                  </div>
-                </Collapse>
-
-                <!-- end .inner-->
-              </div>
-              <!-- end .table-folded-->
-              <div class="table-folded open">
-                <h4 class="head" @click="openAdditionalParams">Дополнительные параметры</h4>
-                <Collapse :when="additionalParamsStatus" class="v-collapse">
-                  <div class="inner">
-                    <div class="spacing">
-                      <div class="table-form-el">
-                        <div class="table-form-label">
-                          WBPublicAPI-SKU <span class="small">STRING</span>
-                        </div>
-                        <input class="table-input" v-model="paramsAdditionalOption" type="text" />
-                        <div class="table-form-subtext">
-                          <div class="red">обязательный параметр</div>
-                          <div>пример: 357457457535</div>
-                        </div>
-                      </div>
-                      <!-- end .form-el-->
-                    </div>
-                  </div>
-                  <!-- end .inner-->
-                </Collapse>
-              </div>
-              <!-- end .table-folded-->
-            </div>
-          </div>
-          <!-- end .table-scroll-wrap-->
-        </div>
-      </SwiperSlide>
-      <!-- end .table-content-->
-
-      <SwiperSlide class="table-resizeable-right">
-
-        <div class="table-content">
-          <ul class="table-head table-tabs js_tabs">
-            <li>
-              <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'code' }"
-                @click="changeResponseSelectedTab('code')"><span>Примеры
-                  кода</span></button>
-            </li>
-            <li>
-              <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'response' }"
-                @click="changeResponseSelectedTab('response')"><span>Примеры
-                  ответа</span></button>
-            </li>
-            <li>
-              <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'result' }"
-                :disabled="isResultTestEndpoint !== true" @click="changeResponseSelectedTab('result')">
-                <span>Полученный результат</span>
-              </button>
-            </li>
-          </ul>
-          <!-- end .table-head-->
-          <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }"
-            data-id="#table-code-example">
-            <div class="table-inner-head">
-              <div class="table-select dark custom-select">
-                <CommonDropDown :items="serversStore.getLangsData" v-model="selectedLangOption" />
-                <div class="arrow"></div>
-              </div>
-              <!-- end .table-select-->
-              <button class="btn btn-pink-black js_copy-table-code"
-                  @click="copyToClipboard(selectedLangOption.value)" ref="copyRef">
-                  <span>Копировать код</span>
-                </button>
-            </div>
-            <!-- end .table-inner-head-->
-
-            <div class="table-tab-content" :class="{ visible: selectedTab === 'get' }" data-id="#table-tab1">
-              <div class="table-scroll-wrap with-bg">
-                <div class="table-scroll">
-                  <pre class="table-code" v-if="selectedLangOption">
-                    {{ selectedLangOption.value }}
-                  </pre>
-                  <!-- end .table-code-->
-                </div>
-              </div>
-              <!-- end .table-scroll-wrap-->
-            </div>
-            <!-- end .table-tab-content-->
-            <div class="table-tab-content" :class="{ visible: selectedTab === 'post' }" data-id="#table-tab2">
-              <div class="table-scroll-wrap with-bg">
-                <div class="table-scroll">
-                  <pre class="table-code" v-if="selectedLangOption"> {{ selectedLangOption.value }}</pre>
-                  <!-- end .table-code-->
-                </div>
-              </div>
-              <!-- end .table-scroll-wrap-->
-            </div>
-            <!-- end .table-tab-content-->
-          </div>
-          <!-- end .table-tab-content-->
-          <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }"
-            data-id="#table-response-example">
-            <div class="table-inner-head">
-              <div class="text">Статусы ответов</div>
-              <div class="table-select dark">
-                <CommonDropDown :items="serversStore.getSelectedResponses" v-model="selectedResponseOption" />
-                <div class="arrow"></div>
-              </div>
-            </div>
-            <!-- end .table-inner-head-->
-            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }" data-id="#table-tab1">
-              <div class="table-scroll-wrap with-bg">
-                <div class="table-scroll">
-                  <div class="table-code" v-html="selectedResponseOption.value" v-if="selectedResponseOption"></div>
-                  <!-- end .table-code-->
-                </div>
-              </div>
-              <!-- end .table-scroll-wrap-->
-            </div>
-            <!-- end .table-tab-content-->
-            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }"
-              data-id="#table-tab2">
-              <div class="table-scroll-wrap with-bg">
-                <div class="table-scroll">
-                  <div class="table-code" v-html="selectedResponseOption.value" v-if="selectedResponseOption"></div>
-                  <!-- end .table-code-->
-                </div>
-              </div>
-              <!-- end .table-scroll-wrap-->
-            </div>
-            <!-- end .table-tab-content-->
-          </div>
-          <!-- end .table-tab-content-->
-
-          <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'result' }" data-id="#table-tab3">
-            <div class="table-scroll-wrap with-bg">
+            <div class="table-scroll-wrap">
               <div class="table-scroll">
-                <div class="table-code" v-if="testEndpointResultData">
-                  <pre> {{ testEndpointResultData }} </pre>
-                </div>
-                <!-- end .table-code-->
+                <ul class="table-main-links js_tabs">
+                  <li v-for="(method, index_method) in serversStore.getMethods" :key="index_method">
+                    <button class="link" :class="{ active: selectedTab === method.type }"
+                      @click="changeSelectedTab(method.type)"><span class="table-method"
+                        :class="method.type === 'get' ? 'green' : 'blue'">{{ method.name }}</span>
+                      <span class="text">{{ method.desc }}</span>
+                    </button>
+                  </li>
+                </ul>
+                <!-- end .table-main-links-->
               </div>
             </div>
             <!-- end .table-scroll-wrap-->
           </div>
-          <!-- end .table-tab-content-->
-        </div>
-        <!-- end .table-content-->
-      </SwiperSlide>
+          <!-- end .table-content-->
 
-    </Swiper>
-    <!-- end .slider-table-->
-    <div class="table-nav">
-      <div class="slide0" v-show="currentSlideIndex === 0">
-        <div class="btn btn-pink-black slider-table-next" @click="nextSlide">
-          <span>Следующий шаг</span>
+        </SwiperSlide><!-- end table-resizeable-left -->
+
+        <SwiperSlide class="table-center">
+          <div class="table-content table-tab-content" v-for="(method, index_method) in serversStore.getMethods"
+            :key="index_method" :class="{ visible: selectedTab === method.type }" data-id="#table-tab1">
+            <div class="table-head">
+              <span class="table-method" :class="method.type === 'get' ? 'green' : 'blue'">{{ method.name
+                }}</span>
+              <span class="text">{{ method.desc }}</span>
+              <button class="btn btn-pink-black btn-test-endpoint" @click="handleTestEndpoint">
+                <span>Test endpoint</span>
+              </button>
+            </div>
+            <!-- end .table-head-->
+            <div class="table-scroll-wrap">
+              <div class="table-scroll">
+                <div class="table-descr">
+                  <h4 class="title">
+                    Получение деталей товара по его URL адресу или SKU.
+                  </h4>
+                  Чтобы воспользоваться этим методом, подставьте интересующие
+                  значения в поля ниже, примените другие настройки,
+                  при необходимости и протестируйте ваш запрос, ознакомтесь
+                  с ответом системы.
+                </div>
+                <!-- end .table-descr-->
+
+                <div class="table-folded open">
+                  <h4 class="head" @click="openMainParams">Основные параметры</h4>
+                  <Collapse :when="mainParamsStatus" class="v-collapse">
+                    <div class="inner">
+                      <div class="spacing">
+                        <div class="table-form-el">
+                          <div class="table-form-label">
+                            WBPublicAPI-Key <span class="small">ENUM</span>
+                          </div>
+                          <CommonDropDown :items="serversStore.getParamsMainData" v-model="paramsMainSelectedOption"
+                            @update:modelValue="handleParamsMainSelected" />
+                          <div class="table-form-subtext">
+                            <div class="red">обязательный параметр</div>
+                          </div>
+                        </div>
+                        <!-- end .form-el-->
+                        <div class="table-form-el">
+                          <div class="table-form-label">
+                            WBPublicAPI-Host <span class="small">STRING</span>
+                          </div>
+                          <input class="table-input" :value="paramsMainSelectedOption?.value" type="text" />
+                          <div class="table-form-subtext">
+                            <div class="red">обязательный параметр</div>
+                          </div>
+                        </div>
+                        <!-- end .form-el-->
+                      </div>
+                    </div>
+                  </Collapse>
+
+                  <!-- end .inner-->
+                </div>
+                <!-- end .table-folded-->
+                <div class="table-folded open">
+                  <h4 class="head" @click="openAdditionalParams">Дополнительные параметры</h4>
+                  <Collapse :when="additionalParamsStatus" class="v-collapse">
+                    <div class="inner">
+                      <div class="spacing">
+                        <div class="table-form-el">
+                          <div class="table-form-label">
+                            WBPublicAPI-SKU <span class="small">STRING</span>
+                          </div>
+                          <input class="table-input" v-model="paramsAdditionalOption" type="text" />
+                          <div class="table-form-subtext">
+                            <div class="red">обязательный параметр</div>
+                            <div>пример: 357457457535</div>
+                          </div>
+                        </div>
+                        <!-- end .form-el-->
+                      </div>
+                    </div>
+                    <!-- end .inner-->
+                  </Collapse>
+                </div>
+                <!-- end .table-folded-->
+              </div>
+            </div>
+            <!-- end .table-scroll-wrap-->
+          </div>
+        </SwiperSlide>
+        <!-- end .table-content-->
+
+        <SwiperSlide class="table-resizeable-right">
+
+          <div class="table-content">
+            <ul class="table-head table-tabs js_tabs">
+              <li>
+                <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'code' }"
+                  @click="changeResponseSelectedTab('code')"><span>Примеры
+                    кода</span></button>
+              </li>
+              <li>
+                <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'response' }"
+                  @click="changeResponseSelectedTab('response')"><span>Примеры
+                    ответа</span></button>
+              </li>
+              <li>
+                <button class="btn btn-small btn-grey" :class="{ active: selectedResponseTab === 'result' }"
+                  :disabled="isResultTestEndpoint !== true" @click="changeResponseSelectedTab('result')">
+                  <span>Полученный результат</span>
+                </button>
+              </li>
+            </ul>
+            <!-- end .table-head-->
+            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }"
+              data-id="#table-code-example">
+              <div class="table-inner-head">
+                <div class="table-select dark custom-select">
+                  <CommonDropDown :items="serversStore.getLangsData" v-model="selectedLangOption" />
+                  <div class="arrow"></div>
+                </div>
+                <!-- end .table-select-->
+                <button class="btn btn-pink-black js_copy-table-code" @click="copyToClipboard(selectedLangOption.value)"
+                  ref="copyRef">
+                  <span>Копировать код</span>
+                </button>
+              </div>
+              <!-- end .table-inner-head-->
+
+              <div class="table-tab-content" :class="{ visible: selectedTab === 'get' }" data-id="#table-tab1">
+                <div class="table-scroll-wrap with-bg">
+                  <div class="table-scroll">
+                    <pre class="table-code" v-if="selectedLangOption">
+                    {{ selectedLangOption.value }}
+                  </pre>
+                    <!-- end .table-code-->
+                  </div>
+                </div>
+                <!-- end .table-scroll-wrap-->
+              </div>
+              <!-- end .table-tab-content-->
+              <div class="table-tab-content" :class="{ visible: selectedTab === 'post' }" data-id="#table-tab2">
+                <div class="table-scroll-wrap with-bg">
+                  <div class="table-scroll">
+                    <pre class="table-code" v-if="selectedLangOption"> {{ selectedLangOption.value }}</pre>
+                    <!-- end .table-code-->
+                  </div>
+                </div>
+                <!-- end .table-scroll-wrap-->
+              </div>
+              <!-- end .table-tab-content-->
+            </div>
+            <!-- end .table-tab-content-->
+            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }"
+              data-id="#table-response-example">
+              <div class="table-inner-head">
+                <div class="text">Статусы ответов</div>
+                <div class="table-select dark">
+                  <CommonDropDown :items="serversStore.getSelectedResponses" v-model="selectedResponseOption" />
+                  <div class="arrow"></div>
+                </div>
+              </div>
+              <!-- end .table-inner-head-->
+              <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'code' }" data-id="#table-tab1">
+                <div class="table-scroll-wrap with-bg">
+                  <div class="table-scroll">
+                    <div class="table-code" v-html="selectedResponseOption.value" v-if="selectedResponseOption"></div>
+                    <!-- end .table-code-->
+                  </div>
+                </div>
+                <!-- end .table-scroll-wrap-->
+              </div>
+              <!-- end .table-tab-content-->
+              <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'response' }"
+                data-id="#table-tab2">
+                <div class="table-scroll-wrap with-bg">
+                  <div class="table-scroll">
+                    <div ref="tableCode" v-if="selectedResponseOption" v-html="selectedResponseOption.value"
+                      class="example-response-code"></div>
+                    <!-- <div class="table-code" v-html="selectedResponseOption.value" v-if="selectedResponseOption"></div> -->
+                    <!-- end .table-code-->
+                  </div>
+                </div>
+                <!-- end .table-scroll-wrap-->
+              </div>
+              <!-- end .table-tab-content-->
+            </div>
+            <!-- end .table-tab-content-->
+
+            <div class="table-tab-content" :class="{ visible: selectedResponseTab === 'result' }" data-id="#table-tab3">
+              <div class="table-scroll-wrap with-bg">
+                <div class="table-scroll">
+                  <div class="table-code" v-if="testEndpointResultData">
+                    <pre> {{ testEndpointResultData }} </pre>
+                  </div>
+                  <!-- end .table-code-->
+                </div>
+              </div>
+              <!-- end .table-scroll-wrap-->
+            </div>
+            <!-- end .table-tab-content-->
+          </div>
+          <!-- end .table-content-->
+        </SwiperSlide>
+
+      </Swiper>
+      <!-- end .slider-table-->
+      <div class="table-nav">
+        <div class="slide0" v-show="currentSlideIndex === 0">
+          <div class="btn btn-pink-black slider-table-next" @click="nextSlide">
+            <span>Следующий шаг</span>
+          </div>
+        </div>
+        <div class="slide1" v-show="currentSlideIndex === 1">
+          <div class="btn btn-grey slider-table-prev" @click="goToFirstSlide">
+            <svg width="24" height="24">
+              <use xlink:href="/img/sprite.svg#undo"></use>
+            </svg>
+          </div>
+          <div class="btn btn-pink-black slider-table-next" @click="testEndpointAndNext">
+            <span>Test endpoint</span>
+          </div>
+        </div>
+        <div class="slide2" v-show="currentSlideIndex === 2">
+          <div class="btn btn-grey slider-table-prev" @click="goToFirstSlide">
+            <svg width="24" height="24">
+              <use xlink:href="/img/sprite.svg#undo"></use>
+            </svg>
+          </div>
+          <div class="btn btn-pink-black slider-table-start" @click="goToFirstSlide">
+            <span>Вернуться в начало</span>
+          </div>
         </div>
       </div>
-      <div class="slide1" v-show="currentSlideIndex === 1">
-        <div class="btn btn-grey slider-table-prev" @click="goToFirstSlide">
-          <svg width="24" height="24">
-            <use xlink:href="/img/sprite.svg#undo"></use>
-          </svg>
-        </div>
-        <div class="btn btn-pink-black slider-table-next" @click="testEndpointAndNext">
-          <span>Test endpoint</span>
-        </div>
-      </div>
-      <div class="slide2" v-show="currentSlideIndex === 2">
-        <div class="btn btn-grey slider-table-prev" @click="goToFirstSlide">
-          <svg width="24" height="24">
-            <use xlink:href="/img/sprite.svg#undo"></use>
-          </svg>
-        </div>
-        <div class="btn btn-pink-black slider-table-start" @click="goToFirstSlide">
-          <span>Вернуться в начало</span>
-        </div>
-      </div>
+      <!-- end .table-nav-->
     </div>
-    <!-- end .table-nav-->
-  </div>
-</Transition>
+  </Transition>
 </template>
 
 <style>
