@@ -74,6 +74,9 @@ export const useAuthStore = defineStore("auth", {
     getCurrentTariff(): ITariff {
       return this.profile.tariff;
     },
+    getCurrentTariffName(): string {
+      return this.profile.tariff.name
+    },
     getCurrentTariffUpdated(): string {
       const updatedAt = this.profile.tariff.$updatedAt; // "2024-04-20T09:07:13.254+00:00"
       const date = new Date(updatedAt);

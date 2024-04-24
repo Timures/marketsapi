@@ -4,6 +4,11 @@ import { useAuthStore } from "@/store/auth.store";
 import ChangePassword from '@/components/personal/ChangePassword.vue'
 const store = useAuthStore();
 const router = useRouter();
+import { useRoute } from 'vue-router';
+
+// Вычисляемое свойство для проверки, находится ли пользователь на странице /cabinet
+const route = useRoute();
+const isOnCabinetPage = computed(() => route.path === '/cabinet');
 
 const logout = async () => {
   await account.deleteSession("current");
@@ -123,7 +128,12 @@ const handleScrollTo = (anchor: string) => {
         </ul>
 
         <ul v-else="store.isAuth">
-          <li>
+          <li v-show="!isOnCabinetPage">
+            <NuxtLink @click.native="handleToggleMenu" class="btn btn-grey btn-small" to="/cabinet">
+              <span>Личный кабинет</span>
+            </NuxtLink>
+          </li>
+          <li v-show="isOnCabinetPage">
             <button class="btn btn-grey btn-small js_modal" @click="handleChangePassword">
               <span>Сменить пароль</span>
             </button>

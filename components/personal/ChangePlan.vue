@@ -48,7 +48,7 @@ const changeTariff = (tariffId: string, convertDays: number) => {
     const changeData = {tariff:tariffId, key_days:convertDays}
     authStore.patchProfileData(changeData)
    
-  console.log('change plan', tariffId);
+//   console.log('change plan', tariffId);
   // Emit close event to close the modal after successful password change
 props.onClose && props.onClose();
   
@@ -88,7 +88,7 @@ onBeforeMount(()=> {
     <div class="modal-head plans-modal">
         <div>
             <h2 class="h3">Сменить тариф</h2>
-        <div class="text">Ваш текущий тариф: Basic с {{  authStore.getCurrentTariffUpdated }}</div>
+        <div class="text">Ваш текущий тариф: {{  authStore.getCurrentTariffName }} с {{  authStore.getCurrentTariffUpdated }}</div>
         </div>
         <div class="plans-head" :class="{yearly : pricesByYear}">
             <button class="btn btn-grey" v-show="pricesByYear" @click="changePriceBy">
