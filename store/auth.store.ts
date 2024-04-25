@@ -33,6 +33,11 @@ interface ITariff {
   price_year: number;
   icon: string;
   tariff_level: number;
+  request_a_day: number;
+  is_promo: boolean;
+  promo_text: string;
+  promo_price: number;
+  promo_price_year: number;
 }
 
 const defaultValue: { user: IAuthStore; profile: IProfile } = {
@@ -94,6 +99,9 @@ export const useAuthStore = defineStore("auth", {
     },
     getCurrentTariffLevel(): number {
       return this.profile.tariff.tariff_level;
+    },
+    getRequestsInTariff(): number {
+      return this.profile.tariff.request_a_day
     },
     getUserKey(): string {
       return this.profile.key;

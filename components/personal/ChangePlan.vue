@@ -64,7 +64,10 @@ const changePriceBy = () => {
     
 }
 
-
+// Функция для вывода пробелов между тысячами, свыше 10 000
+const numberWithSpaces = (num: number) => {
+  return num > 10000 ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : num;
+}
 
 const formatDays = (days: number): string => {
   if (days === 1 || (days % 10 === 1 && days % 100 !== 11)) {
@@ -121,14 +124,31 @@ onBeforeMount(()=> {
                             <img :src="slide.icon" alt="" />
                         </div>
                         <h3 class="h3">{{ slide.name }}</h3>
-                        <div class="text">{{ slide.desc }}<span class="pic-help"
+                        <div class="text">
+                            <span v-if="slide.price === 0">До</span> {{ numberWithSpaces(slide.request_a_day) }} запросов в сутки
+                            <span class="pic-help"
                                 data-tippy-content="Неофициальный API интерфейс с актуальными, а так же историческими данными для ваших систем."></span>
                         </div>
                         <!-- end .text-->
-                        <div class="price">
-                            <div class="per-month" v-show="!pricesByYear"><strong>{{ slide.price }} ₽</strong>/мес</div>
-                            <div class="per-year" v-show="pricesByYear"><strong>{{slide.price_year}} ₽</strong>/год</div>
+                        <div class="price" v-if="!slide.is_promo">
+                            <div class="per-month" v-show="!pricesByYear"><strong>{{ numberWithSpaces(slide.price) }} ₽</strong>/мес</div>
+                            <div class="per-year" v-show="pricesByYear"><strong>{{numberWithSpaces(slide.price_year)}} ₽</strong>/год</div>
                         </div>
+                        <div class="price beta" v-if="slide.is_promo">
+              <div class="small">{{ slide.promo_text }}</div>
+
+              <template v-if="slide.price === 0">
+                <div class="per-month" v-show="!pricesByYear"><strong>{{ slide.price }} ₽</strong>/мес</div>
+                <div class="per-year" v-show="pricesByYear"><strong>{{ slide.price_year }} ₽</strong>/год</div>
+                <div class="big">Бесплатно</div>
+              </template>
+              <template v-else>
+                <div class="per-month" v-show="!pricesByYear"><strong>{{ numberWithSpaces(slide.price) }} ₽</strong>/мес</div>
+                <del class="big per-month" v-show="!pricesByYear">{{ numberWithSpaces(slide.promo_price) }} ₽</del>
+                <div class="per-year" v-show="pricesByYear"><strong>{{ numberWithSpaces(slide.price_year) }} ₽</strong>/год</div>
+                <del class="big per-year" v-show="pricesByYear">{{ numberWithSpaces(slide.promo_price_year) }} ₽</del>
+              </template>
+            </div>
                         <!-- end .price-->
                         <div class="info d-inline">Оставшихся <strong>{{ formatDays(authStore.getKeyExpired) }}</strong> по тарифу {{ authStore.getCurrentTariff.name }} будут пересчитаны в <strong>{{ formatDays(convertPlanDays(slide.tariff_level)) }}</strong> по тарифу {{ slide.name }}.</div>
                     </div>

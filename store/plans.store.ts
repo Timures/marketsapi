@@ -12,6 +12,11 @@ interface Plan {
   price_year: number;
   icon: string;
   tariff_level: number;
+  request_a_day: number;
+  is_promo: boolean;
+  promo_text: string;
+  promo_price: number;
+  promo_price_year: number;
 }
 
 export const usePlansStore = defineStore("plans", {

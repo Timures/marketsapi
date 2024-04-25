@@ -26,6 +26,10 @@
 - price_year Цена за год
 - info Доп.инфо
 - icon Название иконки в /img/plans/
+- request_a_day Количество запросов в день
+- is_promo Включить параметр для вывода промо цен
+- promo_price промо цена в месяц
+- promo_price_year промо цена в год
 
 ### Get faq
 Пример json в /public/data/faq.json. В этом файле 7 вопросов и ответов

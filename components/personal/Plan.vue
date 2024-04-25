@@ -27,6 +27,9 @@ const currentTariff = computed(() => ({
     updated: authStore.getCurrentTariffUpdated,
     icon: authStore.getCurrentTariff.icon,
 }));
+const currentTariffRequests = computed(() => {
+    return authStore.getRequestsInTariff
+})
 
 const requestsText = 'Неофициальный API интерфейс c актуальными, a так же историческими данными для ваших систем.'
 // const detailsRef = ref<HTMLButtonElement | null>(null);
@@ -51,7 +54,7 @@ const requestsText = 'Неофициальный API интерфейс c акт
             <div class="txt">Ваш тариф с {{  currentTariff.updated }}</div>
         </div>
         <!-- end .head-->
-        <div class="detail">1000 запросов в сутки<span class="pic-help"  v-tippy="{
+        <div class="detail">{{ currentTariffRequests }} запросов в сутки<span class="pic-help"  v-tippy="{
           content: requestsText,
           theme: 'light',
           delay: 100,
