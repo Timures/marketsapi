@@ -23,6 +23,7 @@
     "vue-tippy": "v6"
   },
   "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/uuid": "^9.0.8"
   }
 }
